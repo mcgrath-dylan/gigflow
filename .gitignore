@@ -13,6 +13,9 @@ __pycache__/
 # State files — we'll generate these at runtime
 data/seen_posts.json
 
+# Local runner script (machine-specific path)
+run_pipeline.bat
+
 # OS files
 .DS_Store
 Thumbs.db
