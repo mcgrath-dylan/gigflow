@@ -1,0 +1,25 @@
+subreddits:
+  - forhire
+  - slavelabour
+  - dataengineering
+  - analytics
+
+keywords:
+  - data cleanup
+  - data cleaning
+  - data entry
+  - data migration
+  - data formatting
+  - data governance
+  - spreadsheet
+  - csv
+  - excel
+  - google sheets
+  - documentation
+  - policy
+  - report
+  - analysis
+
+filters:
+  max_age_hours: 24
+  min_title_tag: "[hiring]"

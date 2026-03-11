@@ -11,6 +11,6 @@ Format:
 
 ## 2026-03-11 — Session 1
 
-**What I built:**
-**What I learned:**
-**What confused me:**
+**What I built:** I setup the Python virtual environment and repo with basic scaffolding for this project.
+**What I learned:** How to use Claude Code within VSCode.
+**What confused me:** Python not being found but py --version worked.

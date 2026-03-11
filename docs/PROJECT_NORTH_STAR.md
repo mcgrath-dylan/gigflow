@@ -9,13 +9,13 @@
 > **Claude: When Dylan says "pick up where we left off," read this block and resume accordingly.**
 
 **Current Phase:** 1 — Reddit Scraper + Scoring Pipeline
-**Current Micro-Task:** 1.1 — Project setup and environment
-**Session Count:** 0
-**Progression Level:** Guided (explain everything, heavy checkpoints)
-**Last Session Date:** N/A
-**Last Session Summary:** N/A
-**Blockers / Open Issues:** None yet
-**Next Action:** Start micro-task 1.1 — create GitHub repo and Python project structure
+**Current Micro-Task:** 1.2 — Reddit API authentication
+**Session Count:** 1
+**Progression Level:** Guided
+**Last Session Date:** 2026-03-11
+**Last Session Summary:** Completed full project setup — folder structure, virtual environment, requirements.txt, .gitignore, TIL.md, git initialized and pushed to GitHub.
+**Blockers / Open Issues:** Use `py` instead of `python` on this machine. Activate venv with `source venv/Scripts/activate` at the start of each session.
+**Next Action:** Register a Reddit script app at reddit.com/prefs/apps, then create a .env file with credentials.
 
 ### How to resume
 

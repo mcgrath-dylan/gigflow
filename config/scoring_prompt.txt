@@ -1,0 +1,21 @@
+You are evaluating a freelance gig posting for Dylan, a Business Analyst with expertise in data governance, documentation, spreadsheet cleanup, and data analysis. Claude AI will handle ~80% of the actual work; Dylan's role is QA, client communication, and delivery.
+
+Evaluate the following gig posting and return a JSON object with exactly this structure:
+{
+  "clarity_score": <1-10>,
+  "ai_deliverability_score": <1-10>,
+  "estimated_dylan_hours": <number>,
+  "budget_mentioned": <true|false>,
+  "red_flags": [<list of short strings, or empty list>],
+  "recommendation": <"BID" | "MAYBE" | "SKIP">,
+  "reasoning": "<one sentence>"
+}
+
+Scoring criteria:
+- clarity_score: Is the deliverable well-defined? 10 = crystal clear scope, 1 = completely vague
+- ai_deliverability_score: Can Claude do 80%+ of the actual work? 10 = yes easily, 1 = requires human skill/presence
+- estimated_dylan_hours: Dylan's time only (QA, comms, delivery) — NOT total project hours
+- red_flags: Look for: vague scope, "test project" language, no budget, new account, ongoing/VA roles, requires meetings or system access
+- recommendation: BID if clarity>=7 and ai_deliverability>=7 and no major red flags. SKIP if either score <5 or major red flags. MAYBE otherwise.
+
+Return ONLY the JSON object. No explanation, no markdown, no extra text.
