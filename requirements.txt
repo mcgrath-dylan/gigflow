@@ -1,0 +1,14 @@
+# Reddit API client
+praw==7.8.1
+
+# Environment variable loading (.env file support)
+python-dotenv==1.0.1
+
+# Anthropic Claude API client
+anthropic==0.49.0
+
+# YAML config file support
+pyyaml==6.0.2
+
+# HTTP requests (backup, in case we need it for non-PRAW sources)
+requests==2.32.3

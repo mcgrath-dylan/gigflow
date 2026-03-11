@@ -1,0 +1,18 @@
+# Virtual environment — never commit this (it's huge and machine-specific)
+venv/
+.venv/
+
+# Secrets — CRITICAL: never commit credentials or API keys
+.env
+
+# Python bytecode — auto-generated, not needed in git
+__pycache__/
+*.pyc
+*.pyo
+
+# State files — we'll generate these at runtime
+data/seen_posts.json
+
+# OS files
+.DS_Store
+Thumbs.db
