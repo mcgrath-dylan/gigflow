@@ -9,9 +9,9 @@ A real, running pipeline that finds freelance gigs, scores them for fit, drafts 
 ## What it does
 
 ```
-Reddit (r/forhire, r/slavelabour)
+Reddit (5 subreddits, daily) + Hacker News "Who is hiring?" (monthly)
         ↓
-  Filter + Deduplicate        ← config-driven, state-tracked
+  Filter + Deduplicate        ← config-driven, state-tracked per source
         ↓
   Score with Claude API       ← structured prompt, JSON output
         ↓
@@ -33,7 +33,7 @@ This project was built deliberately to practice Analytics Engineering-adjacent s
 | Skill | Where it shows up |
 |---|---|
 | Python data pipeline design | `main.py` orchestrates modular stages end-to-end |
-| API integration | Reddit JSON, Anthropic (Claude), Airtable, Discord webhook |
+| API integration | Reddit JSON, HN Algolia search API, Anthropic (Claude), Airtable, Discord webhook |
 | Config-driven architecture | `config.yaml` separates settings from logic (like dbt profiles) |
 | Incremental state management | `seen_posts.json` prevents reprocessing (like dbt incremental models) |
 | Data modeling | Airtable schema designed and provisioned via API (`setup_airtable.py`) |
@@ -48,7 +48,7 @@ This project was built deliberately to practice Analytics Engineering-adjacent s
 | Component | Tool | Why |
 |---|---|---|
 | Language | Python 3.13 | AE-standard, good API ecosystem |
-| Gig source | Reddit public JSON API | No auth required, direct client contact, no platform fees |
+| Gig sources | Reddit JSON API (5 subreddits, daily) + HN Algolia API (monthly) | No auth required on either; HN runs once per month via state file |
 | AI scoring + proposals | Claude API (Sonnet) | Structured output, ~$5/mo at current volume |
 | Tracking | Airtable | Visual CRM, free tier, schema provisioned via API |
 | Notifications | Discord webhook | Zero-friction, no SMTP config required |
@@ -62,18 +62,21 @@ This project was built deliberately to practice Analytics Engineering-adjacent s
 src/
   main.py              # Pipeline orchestrator — runs all stages in order
   reddit_scraper.py    # Fetch, filter, and deduplicate Reddit posts
+  hn_scraper.py        # HN "Who is hiring?" thread discovery, Algolia keyword search, monthly state
   scorer.py            # Claude API scoring — returns BID / MAYBE / SKIP + rationale
   proposer.py          # Claude API proposal generation from template library
+  notifier.py          # Discord digest formatting and delivery
   airtable_logger.py   # Log BID/MAYBE gigs to Airtable automatically
   setup_airtable.py    # One-time: create Gigs table schema via Airtable API
 
 config/
-  config.yaml          # Subreddits, keywords, filter settings, Airtable config
+  config.yaml          # Subreddits, keywords, filter settings, HN config, pre-screen rules
   scoring_prompt.txt   # Claude scoring instructions (edit to tune without code changes)
   templates/           # Proposal templates: analysis, data-cleanup, doc-writing, general-short
 
 data/
-  seen_posts.json      # State file — tracks processed post IDs (gitignored, generated at runtime)
+  seen_posts.json      # Reddit state — processed post IDs (gitignored, generated at runtime)
+  hn_state.json        # HN state — last processed thread ID, enforces monthly-only runs (gitignored)
 
 docs/
   PROJECT_NORTH_STAR.md  # Full project spec, architecture decisions, session state
