@@ -8,14 +8,14 @@
 
 > **Claude: When Dylan says "pick up where we left off," read this block and resume accordingly.**
 
-**Current Phase:** 3 — Expand Sources + Refine
-**Current Micro-Task:** 3.3 — Phase 4 outbound strategy
+**Current Phase:** 4 — Outbound + First Revenue
+**Current Micro-Task:** 4.1 — Build GitHub Pages portfolio page
 **Session Count:** 5
 **Progression Level:** Supervised
 **Last Session Date:** 2026-03-12
-**Last Session Summary:** Added HN scraper (monthly, Algolia search, require_terms filter). Expanded Reddit to 5 subreddits (added r/freelance_forhire, r/WorkOnline, r/HireaWriter) with tag_exempt_subreddits config for subreddits that don't use [Hiring] tags. Investigated + eliminated Craigslist (403 on all endpoints) and RemoteOK (90% full-time engineering). Tightened keywords — replaced broad "report"/"analysis" with "data report"/"data analysis", added "sop", "standard operating procedure", "data quality", "process documentation".
-**Blockers / Open Issues:** Source quality ceiling identified: high AI-deliverability gigs (data cleanup, SOPs, spreadsheet work) are posted by non-technical people who don't use developer platforms. Inbound monitoring alone is unlikely to fund the tools.
-**Next Action:** Phase 4 — Outbound strategy. Options: (a) post Dylan's services to the same subreddits as [For Hire], (b) simple portfolio page on GitHub Pages, (c) both. Decide and build.
+**Last Session Summary:** Phase 3 complete. HN scraper operational (monthly, Algolia, require_terms filter). Reddit expanded to 5 subreddits with tag_exempt_subreddits config. Craigslist (403) and RemoteOK (wrong market) investigated and eliminated. Keywords tightened — removed broad false-positive terms, added compound and domain-specific alternatives. North Star and README both updated to match actual repo state. Repo is clean, accurate, and portfolio-ready.
+**Blockers / Open Issues:** None. Inbound ceiling is a known structural constraint, not a blocker — Phase 4 outbound addresses it.
+**Next Action:** Phase 4.1 — GitHub Pages portfolio page. Simple 1-pager: who Dylan is, what he does, sample work types, contact/Reddit link. Build with Claude Code, deploy via GitHub Pages. Then 4.2: [For Hire] post template for subreddits.
 
 ### How to resume
 
