@@ -11,9 +11,15 @@ def format_post(post: dict) -> str:
     rec = post["recommendation"]
     emoji = {"BID": "🟢", "MAYBE": "🟡", "SKIP": "🔴"}.get(rec, "⚪")
 
+    source = post.get("source", "reddit")
+    if source == "hackernews":
+        source_line = "📌 Hacker News — Who is hiring?"
+    else:
+        source_line = f"📌 r/{post['subreddit']} | 👤 u/{post['author']}"
+
     lines = [
         f"{emoji} **{post['title']}**",
-        f"📌 r/{post['subreddit']} | 👤 u/{post['author']}",
+        source_line,
         f"🔗 {post['url']}",
         f"**Scores:** Clarity {post['clarity_score']}/10 | AI Deliverability {post['ai_deliverability_score']}/10 | ~{post['estimated_dylan_hours']}h Dylan time",
         f"**Recommendation:** {rec} — {post['reasoning']}",
