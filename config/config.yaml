@@ -12,14 +12,18 @@ keywords:
   - data migration
   - data formatting
   - data governance
+  - data quality
+  - data report
+  - data analysis
   - spreadsheet
   - csv
   - excel
   - google sheets
   - documentation
+  - process documentation
+  - sop
+  - standard operating procedure
   - policy
-  - report
-  - analysis
 
 filters:
   max_age_hours: 48

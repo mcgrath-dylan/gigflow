@@ -9,13 +9,13 @@
 > **Claude: When Dylan says "pick up where we left off," read this block and resume accordingly.**
 
 **Current Phase:** 3 — Expand Sources + Refine
-**Current Micro-Task:** 3.1 — Add second gig source
-**Session Count:** 4
+**Current Micro-Task:** 3.3 — Phase 4 outbound strategy
+**Session Count:** 5
 **Progression Level:** Supervised
-**Last Session Date:** 2026-03-11
-**Last Session Summary:** Created Airtable Gigs table via API (IaC pattern), built airtable_logger.py, wired auto-logging into main.py for BID+MAYBE posts. Phase 2 complete.
-**Blockers / Open Issues:** None.
-**Next Action:** Evaluate and integrate a second gig source (Contra, Discord, or other). Tune scoring prompt with Phase 1-2 data.
+**Last Session Date:** 2026-03-12
+**Last Session Summary:** Added HN scraper (monthly, Algolia search, require_terms filter). Expanded Reddit to 5 subreddits (added r/freelance_forhire, r/WorkOnline, r/HireaWriter) with tag_exempt_subreddits config for subreddits that don't use [Hiring] tags. Investigated + eliminated Craigslist (403 on all endpoints) and RemoteOK (90% full-time engineering). Tightened keywords — replaced broad "report"/"analysis" with "data report"/"data analysis", added "sop", "standard operating procedure", "data quality", "process documentation".
+**Blockers / Open Issues:** Source quality ceiling identified: high AI-deliverability gigs (data cleanup, SOPs, spreadsheet work) are posted by non-technical people who don't use developer platforms. Inbound monitoring alone is unlikely to fund the tools.
+**Next Action:** Phase 4 — Outbound strategy. Options: (a) post Dylan's services to the same subreddits as [For Hire], (b) simple portfolio page on GitHub Pages, (c) both. Decide and build.
 
 ### How to resume
 
@@ -362,6 +362,12 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 | 2026-03-11 | Run pipeline once daily at 5pm instead of 2x/day | Token efficiency; Dylan's schedule means 5pm is the only actionable time anyway |
 | 2026-03-11 | Compress timeline from weeks to days | Dylan motivated to move fast; Phase 1 completed in one session with no quality loss |
 | 2026-03-11 | Remove r/dataengineering and r/analytics from config | Discussion communities, not job boards; [Hiring] tag filter screens out nearly everything there |
+| 2026-03-12 | Add HN as second source (monthly, "Who is hiring?" thread) | Free, no auth, Algolia search API. Require_terms filter keeps only contract/freelance posts to avoid full-time job noise. |
+| 2026-03-12 | Eliminate Craigslist | RSS returns 403 from all endpoints including residential IP. Dead end. |
+| 2026-03-12 | Eliminate RemoteOK | Free API but 90% full-time engineering roles. Wrong market for Dylan's gig types. |
+| 2026-03-12 | Expand Reddit to 5 subreddits | Added r/freelance_forhire, r/WorkOnline, r/HireaWriter. tag_exempt_subreddits config bypasses [Hiring] tag check for subs that don't use it. |
+| 2026-03-12 | Tighten keywords — remove "report" and "analysis" | Too broad — catching journalism and research writing posts. Replaced with "data report", "data analysis". Added "sop", "standard operating procedure", "data quality", "process documentation". |
+| 2026-03-12 | Acknowledge inbound ceiling; pivot to Phase 4 outbound | High AI-deliverability gigs are posted on non-developer platforms. Passive monitoring alone won't fund the tools — outbound needed. |
 
 ---
 
