@@ -41,11 +41,17 @@ def send_digest(scored_posts: list[dict]) -> None:
 
     bids = [p for p in scored_posts if p["recommendation"] == "BID"]
     maybes = [p for p in scored_posts if p["recommendation"] == "MAYBE"]
+    actionable = bids + maybes
 
-    header = f"## 🔍 GigFlow Digest — {len(scored_posts)} new match(es), {len(bids)} BID, {len(maybes)} MAYBE\n"
+    if not actionable:
+        payload = {"content": f"✅ GigFlow ran — {len(scored_posts)} scored, none actionable today."}
+        requests.post(WEBHOOK_URL, json=payload)
+        return
+
+    header = f"## 🔍 GigFlow Digest — {len(bids)} BID, {len(maybes)} MAYBE ({len(scored_posts)} total scored)\n"
 
     # Discord has a 2000 char limit per message, so send one message per post
     requests.post(WEBHOOK_URL, json={"content": header})
 
-    for post in scored_posts:
+    for post in actionable:
         requests.post(WEBHOOK_URL, json={"content": format_post(post)})
