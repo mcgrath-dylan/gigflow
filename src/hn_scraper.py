@@ -97,7 +97,7 @@ def search_thread_comments(thread_id, keywords, max_per_keyword=20):
 
 # --- Main entry point ---
 
-def get_hn_gigs(keywords, max_comment_chars=800, **_kwargs):
+def get_hn_gigs(keywords, max_comment_chars=800, require_terms=None, **_kwargs):
     """
     Find this month's HN 'Who is hiring?' thread, search for comments matching
     keywords via Algolia, and return them as a list of dicts — same shape as
@@ -127,6 +127,11 @@ def get_hn_gigs(keywords, max_comment_chars=800, **_kwargs):
         text = strip_html(raw_text)
         if len(text) < 50:
             continue
+
+        if require_terms:
+            text_lower = text.lower()
+            if not any(t.lower() in text_lower for t in require_terms):
+                continue
 
         first_line = text.split("\n")[0][:80]
 

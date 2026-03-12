@@ -80,10 +80,11 @@ def filter_posts(posts: list[dict], config: dict, seen_ids: set) -> list[dict]:
     tag = config["filters"]["min_title_tag"]
     hours = config["filters"]["max_age_hours"]
     keywords = config["keywords"]
+    exempt = {s.lower() for s in config["filters"].get("tag_exempt_subreddits", [])}
     return [
         p for p in posts
         if p["id"] not in seen_ids
-        and is_hiring_post(p, tag)
+        and (p["subreddit"].lower() in exempt or is_hiring_post(p, tag))
         and is_recent(p, hours)
         and matches_keywords(p, keywords)
     ]

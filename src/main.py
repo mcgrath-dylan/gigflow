@@ -30,6 +30,7 @@ def run():
             keywords=config["keywords"],
             max_comment_chars=config["hn"].get("max_comment_chars", 800),
             max_comments=config["hn"].get("max_comments", 200),
+            require_terms=config["hn"].get("require_terms"),
         )
         hn_posts = [p for p in hn_posts if p["id"] not in seen_ids]
 

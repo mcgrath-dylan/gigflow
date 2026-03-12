@@ -1,6 +1,9 @@
 subreddits:
   - forhire
   - slavelabour
+  - freelance_forhire
+  - WorkOnline
+  - HireaWriter
 
 keywords:
   - data cleanup
@@ -21,11 +24,21 @@ keywords:
 filters:
   max_age_hours: 48
   min_title_tag: "[hiring]"
+  tag_exempt_subreddits:
+    - WorkOnline
+    - HireaWriter
 
 hn:
   enabled: true
   max_comment_chars: 800
   max_comments: 200
+  require_terms:
+    - contract
+    - freelance
+    - part-time
+    - part time
+    - consulting
+    - consultant
 
 pre_screen:
   min_body_words: 30
