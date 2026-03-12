@@ -20,6 +20,9 @@ def format_post(post: dict) -> str:
     ]
     if post["red_flags"]:
         lines.append(f"⚠️ Red flags: {', '.join(post['red_flags'])}")
+    if post.get("proposal"):
+        label = "📝 **Draft proposal:**" if rec == "BID" else "📝 **Draft proposal** *(MAYBE — review carefully before sending):*"
+        lines.append(f"\n{label}\n```\n{post['proposal']}\n```")
 
     return "\n".join(lines)
 

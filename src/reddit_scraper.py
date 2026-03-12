@@ -59,6 +59,23 @@ def matches_keywords(post: dict, keywords: list[str]) -> bool:
     return any(kw in text for kw in keywords)
 
 
+def pre_screen(post: dict, config: dict) -> tuple[bool, str]:
+    """Cheap local check before hitting the Claude API. Returns (passes, reason)."""
+    cfg = config.get("pre_screen", {})
+    text = (post["title"] + " " + post["body"]).lower()
+
+    word_count = len(post["body"].split())
+    min_words = cfg.get("min_body_words", 30)
+    if word_count < min_words:
+        return False, f"body too short ({word_count} words)"
+
+    for phrase in cfg.get("skip_phrases", []):
+        if phrase in text:
+            return False, f"skip phrase matched: '{phrase}'"
+
+    return True, "ok"
+
+
 def filter_posts(posts: list[dict], config: dict, seen_ids: set) -> list[dict]:
     tag = config["filters"]["min_title_tag"]
     hours = config["filters"]["max_age_hours"]

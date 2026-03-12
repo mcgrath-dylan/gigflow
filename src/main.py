@@ -1,6 +1,8 @@
-from reddit_scraper import load_config, fetch_posts, filter_posts, load_seen_ids, save_seen_ids
+from reddit_scraper import load_config, fetch_posts, filter_posts, pre_screen, load_seen_ids, save_seen_ids
 from scorer import score_post
+from proposer import draft_proposal
 from notifier import send_digest
+from airtable_logger import log_gig
 
 
 def run():
@@ -20,9 +22,20 @@ def run():
     matched = filter_posts(all_posts, config, seen_ids)
     print(f"\n{len(all_posts)} total fetched, {len(matched)} new matches after filtering.")
 
+    # Pre-screen: cheap local filter before hitting Claude API
+    to_score = []
+    for post in matched:
+        passes, reason = pre_screen(post, config)
+        if passes:
+            to_score.append(post)
+        else:
+            print(f"  [pre-screen skip] {post['title'][:60]} — {reason}")
+
+    print(f"{len(to_score)} posts pass pre-screen ({len(matched) - len(to_score)} cut).\n")
+
     # Score each match
     scored = []
-    for post in matched:
+    for post in to_score:
         print(f"Scoring: {post['title'][:60]}...")
         result = score_post(post)
         scored.append(result)
@@ -31,6 +44,15 @@ def run():
     # Sort: BID first, then MAYBE, then SKIP
     order = {"BID": 0, "MAYBE": 1, "SKIP": 2}
     scored.sort(key=lambda p: order.get(p["recommendation"], 3))
+
+    # Draft proposals + log to Airtable: BID and MAYBE = auto, SKIP = none
+    for post in scored:
+        if post["recommendation"] in ("BID", "MAYBE"):
+            print(f"Drafting proposal for: {post['title'][:60]}...")
+            post["proposal"] = draft_proposal(post)
+            log_gig(post)
+        else:
+            post["proposal"] = None
 
     # Notify
     send_digest(scored)

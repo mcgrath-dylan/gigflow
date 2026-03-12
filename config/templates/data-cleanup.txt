@@ -1,0 +1,11 @@
+Hi [POSTER_NAME_OR_OP],
+
+Saw your post about [SPECIFIC_PROBLEM_FROM_POSTING] — this is exactly the kind of work I do.
+
+I'll [DELIVERABLE_DESCRIPTION — e.g. clean and reformat your spreadsheet, remove duplicates, standardize columns] and deliver it as [OUTPUT_FORMAT] within [TIMELINE].
+
+[BUDGET_LINE — either "Happy to work within your $X budget." or "What's your budget for this?"]
+
+Any questions, just ask.
+
+— Dylan

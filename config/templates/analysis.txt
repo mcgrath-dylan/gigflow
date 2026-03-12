@@ -1,0 +1,11 @@
+Hi [POSTER_NAME_OR_OP],
+
+Your post about [SPECIFIC_TASK_FROM_POSTING] caught my eye — I work on exactly this kind of analysis.
+
+I'll [ANALYSIS_DESCRIPTION] and deliver a clear written summary with [KEY_OUTPUT — e.g. findings, charts, recommendations]. Timeline: [TIMELINE].
+
+[BUDGET_LINE — either "Happy to work within your $X budget." or "What's your budget for this?"]
+
+Happy to discuss scope if helpful.
+
+— Dylan

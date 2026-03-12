@@ -1,8 +1,6 @@
 subreddits:
   - forhire
   - slavelabour
-  - dataengineering
-  - analytics
 
 keywords:
   - data cleanup
@@ -21,5 +19,17 @@ keywords:
   - analysis
 
 filters:
-  max_age_hours: 24
+  max_age_hours: 48
   min_title_tag: "[hiring]"
+
+pre_screen:
+  min_body_words: 30
+  skip_phrases:
+    - "virtual assistant"
+    - "va needed"
+    - "ongoing basis"
+    - "long-term"
+    - "long term"
+    - "test project"
+    - "test task"
+    - "unpaid"

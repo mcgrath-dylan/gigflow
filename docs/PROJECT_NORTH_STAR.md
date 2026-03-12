@@ -8,14 +8,14 @@
 
 > **Claude: When Dylan says "pick up where we left off," read this block and resume accordingly.**
 
-**Current Phase:** 2 — Proposal System
-**Current Micro-Task:** 2.1 — Proposal template library
-**Session Count:** 2
-**Progression Level:** Collaborative
+**Current Phase:** 3 — Expand Sources + Refine
+**Current Micro-Task:** 3.1 — Add second gig source
+**Session Count:** 4
+**Progression Level:** Supervised
 **Last Session Date:** 2026-03-11
-**Last Session Summary:** Built complete Phase 1 pipeline — Reddit scraper, Claude scorer, Discord notifier, Task Scheduler automation. Pipeline runs daily at 5pm.
-**Blockers / Open Issues:** Reddit blocks GitHub Actions IPs; running locally via Task Scheduler instead.
-**Next Action:** Design proposal templates for the 3 most common gig types (data cleanup, doc writing, analysis).
+**Last Session Summary:** Created Airtable Gigs table via API (IaC pattern), built airtable_logger.py, wired auto-logging into main.py for BID+MAYBE posts. Phase 2 complete.
+**Blockers / Open Issues:** None.
+**Next Action:** Evaluate and integrate a second gig source (Contra, Discord, or other). Tune scoring prompt with Phase 1-2 data.
 
 ### How to resume
 

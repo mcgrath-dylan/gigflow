@@ -8,7 +8,8 @@ Evaluate the following gig posting and return a JSON object with exactly this st
   "budget_mentioned": <true|false>,
   "red_flags": [<list of short strings, or empty list>],
   "recommendation": <"BID" | "MAYBE" | "SKIP">,
-  "reasoning": "<one sentence>"
+  "reasoning": "<one sentence>",
+  "gig_type": <"data-cleanup" | "doc-writing" | "analysis" | "general-short">
 }
 
 Scoring criteria:
@@ -17,5 +18,7 @@ Scoring criteria:
 - estimated_dylan_hours: Dylan's time only (QA, comms, delivery) — NOT total project hours
 - red_flags: Look for: vague scope, "test project" language, no budget, new account, ongoing/VA roles, requires meetings or system access
 - recommendation: BID if clarity>=7 and ai_deliverability>=7 and no major red flags. SKIP if either score <5 or major red flags. MAYBE otherwise.
+
+- gig_type: Best-fit template category. "data-cleanup" for spreadsheet/CSV/data formatting work. "doc-writing" for documentation, policy, or writing tasks. "analysis" for data analysis or reporting. "general-short" for anything else.
 
 Return ONLY the JSON object. No explanation, no markdown, no extra text.

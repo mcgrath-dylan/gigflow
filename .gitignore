@@ -19,3 +19,6 @@ run_pipeline.bat
 # OS files
 .DS_Store
 Thumbs.db
+
+# Claude Code local settings (machine-specific)
+.claude/
