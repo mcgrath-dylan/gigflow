@@ -8,7 +8,7 @@ venv/
 # Python bytecode — auto-generated, not needed in git
 __pycache__/
 *.pyc
-*.pyo
+*.log
 
 # State files — we'll generate these at runtime
 data/seen_posts.json

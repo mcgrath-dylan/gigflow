@@ -9,13 +9,13 @@
 > **Claude: When Dylan says "pick up where we left off," read this block and resume accordingly.**
 
 **Current Phase:** 4 — Outbound + First Revenue
-**Current Micro-Task:** 4.1 — Build GitHub Pages portfolio page
-**Session Count:** 5
+**Current Micro-Task:** 4.2 — [For Hire] post template
+**Session Count:** 6
 **Progression Level:** Supervised
 **Last Session Date:** 2026-03-12
-**Last Session Summary:** Phase 3 complete. HN scraper operational (monthly, Algolia, require_terms filter). Reddit expanded to 5 subreddits with tag_exempt_subreddits config. Craigslist (403) and RemoteOK (wrong market) investigated and eliminated. Keywords tightened — removed broad false-positive terms, added compound and domain-specific alternatives. North Star and README both updated to match actual repo state. Repo is clean, accurate, and portfolio-ready.
-**Blockers / Open Issues:** None. Inbound ceiling is a known structural constraint, not a blocker — Phase 4 outbound addresses it.
-**Next Action:** Phase 4.1 — GitHub Pages portfolio page. Simple 1-pager: who Dylan is, what he does, sample work types, contact/Reddit link. Build with Claude Code, deploy via GitHub Pages. Then 4.2: [For Hire] post template for subreddits.
+**Last Session Summary:** Strategic review of Phase 4. Concluded Reddit outbound is structurally low-ROI (karma gates, wrong audience for Dylan's gig types) but portfolio page is worth building to close the project as a Bucket 2 artifact. Built index.html at repo root — clean no-framework 1-pager with service cards, process steps, and email CTA (mcgrath.fintech@gmail.com). Logged automated client/job acquisition research agent as a backlog item (Section 12). Reddit username placeholder removed; throwaway account (Massive_Match_8103) was never used and correctly dropped.
+**Blockers / Open Issues:** Dylan needs to enable GitHub Pages in repo settings (Settings → Pages → main branch, root folder). Portfolio page is otherwise complete.
+**Next Action:** Phase 4.2 — write one [For Hire] post template (r/forhire format). Then gate task: submit at least one real proposal against an inbound gig from the pipeline. No further development until a real proposal is submitted.
 
 ### How to resume
 
@@ -53,7 +53,7 @@ This project exists within a broader personal strategy:
 
 | | Bucket 1: Fund the Tools | Bucket 2: Build Toward AE |
 |---|---|---|
-| **Goal** | Self-sustaining AI subscription income ($100-200/mo) | Portfolio, skills, visibility for Analytics Engineering pivot |
+| **Goal** | Self-sustaining AI subscription income | Portfolio, skills, visibility for Analytics Engineering growth |
 | **Timeline** | Immediate | 6-18 months |
 | **Overlap** | Building this pipeline IS an AE-relevant portfolio piece (data pipelines, APIs, Python, automation) |
 
@@ -62,8 +62,8 @@ This project exists within a broader personal strategy:
 ### Constraints
 
 - **Time budget:** 2-3 hours/week until proven, then scale up
-- **Financial budget:** Minimal. Claude API costs (~$5/mo), free-tier tooling preferred
-- **Dylan's current role:** Business Analyst, Data Governance team at LFG
+- **Financial budget:** Minimal. Claude API costs, free-tier tooling preferred
+- **Dylan's current role:** Business Analyst, Data Governance team
 - **Core skills to leverage:** Data standards/policy documentation, light analysis/reporting, stakeholder translation (technical ↔ business), spreadsheet/data cleanup
 - **No existing freelance network** — cold-start problem is real and acknowledged
 
@@ -421,7 +421,13 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 ---
 
-## 12. Open Questions (Resolve As You Go)
+## 12. Backlog (Deprioritized — Revisit After First Revenue)
+
+- [ ] **Automated client/job acquisition research agent** — Evaluate whether a dedicated research agent could automate discovery on non-developer platforms (Facebook groups, LinkedIn, etc.) where the actual buyers for Dylan's gig types post. Reddit/HN passive monitoring hits a structural ceiling. The hypothesis: an agent that proactively searches and surfaces opportunities on these channels could replace or supplement manual monitoring. Requires evaluating platform APIs, scrapeability, and whether automation is even feasible given bot detection. *Context: surfaced during Phase 4 strategic review; deprioritized in favor of manual outbound first.*
+
+---
+
+## 13. Open Questions (Resolve As You Go)
 
 - [x] Reddit API: Which auth method? → Resolved: no auth, public JSON endpoint
 - [x] Notifications: Slack or email? → Resolved: Discord webhook

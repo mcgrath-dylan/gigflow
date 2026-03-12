@@ -9,11 +9,28 @@ Format:
 
 ---
 
+## 2026-03-12 — Session 6
+
+**What I built:** Built index.html portfolio page. 
+**What I learned:** Reddit outbound is also highly likely to be low-ROI.
+**What confused me:** Nothing.
+ 
+---
+
+## 2026-03-12 — Session 5
+
+**What I built:** Added HN scraper, expanded Reddit to 5 subreddits, investigated and elimanated potential other sources.
+**What I learned:** Passive scrapers are unlikely to surface real opportunities.
+**What confused me:** How difficult it is to find high quality sources for allegedly in demand work.
+ 
+---
+
 ## 2026-03-11 — Session 4
 
 **What I built:** Finished Micro-task 2.2: Airtable tracking base with full schema, auto-logging wired into pipeline.
 **What I learned:** How to create a table in Airtable through the API and POST records to it.
-**What confused me:** The Airtable base ID debacle -> Build table on existing base. 
+**What confused me:** The Airtable base ID debacle -> Build table on existing base.
+
 ---
 
 ## 2026-03-11 — Session 3
