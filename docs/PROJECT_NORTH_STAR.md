@@ -1,6 +1,6 @@
 # Project North Star: AI-Assisted Freelance Pipeline
 
-## Last Updated: March 11, 2026
+## Last Updated: March 12, 2026
 
 ---
 
@@ -31,7 +31,7 @@
 **Codename:** GigFlow
 **Owner:** Dylan
 **AI Partner:** Claude (Anthropic)
-**Status:** Phase 1 complete — Phase 2 in progress
+**Status:** Phases 1–3 complete — Phase 4 starting
 
 ### What This Is
 
@@ -89,11 +89,14 @@ This project exists within a broader personal strategy:
 #### Layer 1: Gig Radar (Monitoring)
 **Purpose:** Automatically discover relevant gig postings from multiple sources.
 
-**Sources (prioritized):**
-1. Reddit (r/forhire, r/slavelabour) — public JSON endpoint, no auth required
-2. Contra — job feed (API/RSS if available, light scraping as fallback)
-3. Discord servers (data/analytics communities) — via webhooks
-4. LinkedIn job alerts — passive input, no automation needed
+**Sources (active):**
+1. Reddit (r/forhire, r/slavelabour, r/freelance_forhire, r/WorkOnline, r/HireaWriter) — public JSON endpoint, no auth required; daily cadence
+2. Hacker News "Who is hiring?" — monthly thread, Algolia search API, no auth required; runs once per month via state file
+3. LinkedIn job alerts — passive input, no automation
+
+**Sources evaluated and eliminated:** Contra (design/product skew), Discord (auth required), Craigslist (RSS 403 from all endpoints), RemoteOK (90% full-time engineering roles).
+
+**Structural note:** Inbound monitoring has a ceiling for Dylan's gig types. Data cleanup, SOPs, and spreadsheet work are posted by non-technical people who don't use developer platforms. Phase 4 outbound is needed to complement passive monitoring.
 
 **Output:** Raw list of candidate gigs with metadata (source, title, description, budget if stated, post date, poster history).
 
@@ -163,13 +166,14 @@ This project exists within a broader personal strategy:
 |---|---|---|---|
 | Scripting | Python 3.13 | Free | AE-relevant, good API support |
 | Reddit data | `requests` + public JSON API | Free | Reddit locked down script app registration; public endpoint requires no auth |
-| AI Engine | Claude API (Sonnet for scoring) | ~$5/mo | Already in ecosystem |
+| HN data | Algolia search API + HN Firebase API | Free | No auth required; monthly cadence; searches within HN thread by keyword |
+| AI Engine | Claude API (Sonnet for scoring + proposals) | ~$5/mo | Already in ecosystem |
 | Scheduling | Windows Task Scheduler (local) | Free | Reddit blocks GitHub Actions/datacenter IPs; local runner on residential IP works fine |
-| CRM/Tracker | Airtable | Free tier | Visual, no-code, fast to set up |
+| CRM/Tracker | Airtable | Free tier | Visual, no-code, fast to set up; auto-logged via airtable_logger.py |
 | Notifications | Discord webhook | Free | Zero-friction setup; Gmail app passwords require 2FA |
 | Version Control | GitHub (private repo) | Free | Portfolio-ready, good practice |
 
-**Explicitly not using:** Upwork (connect costs, bot competition), Fiverr (20% fee), praw (Reddit locked down API registration), GitHub Actions for scheduling (Reddit 403 block).
+**Explicitly not using:** Upwork (connect costs, bot competition), Fiverr (20% fee), praw (Reddit locked down API registration), GitHub Actions for scheduling (Reddit 403 block), Craigslist (RSS 403 from all IPs), RemoteOK (wrong market — full-time eng roles).
 
 ---
 
@@ -182,9 +186,9 @@ This project exists within a broader personal strategy:
 | Producing client deliverables (file-in → file-out) | Cowork | Non-technical, folder-based, fast for repetitive production tasks |
 | Ad hoc analysis or tracking | Either | Depends on complexity |
 
-**Build phase (Phases 1-3):** Claude Code is primary.
+**Build phase (Phases 1–3):** Complete. Claude Code remains available for Phase 4 portfolio work and pipeline maintenance.
 
-**Operational phase (Phase 4+):** Cowork takes over deliverable production. Claude Code stays for pipeline maintenance and new features.
+**Operational phase (Phase 4+):** Cowork takes over deliverable production. Claude Code stays for new features and the portfolio page build.
 
 **Key principle:** Claude Code is where the learning happens. Cowork is where the earning happens.
 
@@ -279,44 +283,53 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 ---
 
-### Phase 2: Proposal System + Airtable (days, not weeks)
+### Phase 2: Proposal System + Airtable ✅ COMPLETE
 
 **Goal:** End-to-end flow from scored gig → draft proposal → tracking.
 
 **Deliverables:**
-- [ ] Proposal template library (3-4 templates)
-- [ ] Claude API integration for proposal customization
-- [ ] Airtable base with gig tracking schema
-- [ ] Discord notification includes draft proposal alongside scored gig
-- [ ] Simple "log this gig" workflow
+- [x] Proposal template library (3-4 templates)
+- [x] Claude API integration for proposal customization
+- [x] Airtable base with gig tracking schema
+- [x] Discord notification includes draft proposal alongside scored gig
+- [x] Simple "log this gig" workflow (airtable_logger.py auto-logs BID+MAYBE posts)
 
-**Success criteria:** Dylan's per-gig time from discovery to proposal submission is under 10 minutes. At least 1 proposal actually submitted.
+**Success criteria:** Pipeline built and functional — per-gig time target achievable. First proposal submission is now the Phase 4 operational target.
 
 ---
 
-### Phase 3: Expand Sources + Refine (days, not weeks)
+### Phase 3: Expand Sources + Refine ✅ COMPLETE
 
 **Goal:** Add non-Reddit sources and tune the system based on real data.
 
 **Deliverables:**
-- [ ] At least 1 additional source integrated (Contra, Discord, or other)
-- [ ] Scoring prompt refined based on Phase 1-2 data
-- [ ] Template library expanded based on actual gig types encountered
-- [ ] First monthly review completed
+- [x] At least 1 additional source integrated — HN "Who is hiring?" added (monthly, Algolia); Reddit expanded to 5 subreddits
+- [x] Scoring keywords tightened — false positives ("report", "analysis") replaced with compound terms; "sop", "data quality", "process documentation" added
+- [ ] Template library expanded based on actual gig types — deferred: no real gigs yet to base this on
+- [ ] First monthly review — deferred: pipeline needs a full month of live runs first
 
-**Success criteria:** System surfaces viable gigs from 2+ sources. Scoring accuracy improves measurably.
+**Success criteria:** Two sources operational. Keywords tightened — measurably fewer false positives. Structural ceiling identified: inbound alone won't meet Bucket 1 target. Phase 4 outbound warranted.
 
 ---
 
-### Phase 4+: Ongoing Iteration
+### Phase 4: Outbound + First Revenue
 
-**Goal:** Optimize for revenue and reduce Dylan's time per dollar.
+**Goal:** Complement inbound monitoring with proactive outreach. Generate the first actual client engagement and first dollar of revenue.
 
-**Possible additions (evaluate based on data, don't pre-build):**
-- Auto-response for common follow-up questions
-- Client relationship tracking (repeat clients get flagged)
-- Portfolio page (simple GitHub Pages site showcasing work types)
-- Rate optimization (A/B test pricing on similar gigs)
+**Context:** Phase 3 confirmed that inbound monitoring alone hits a structural ceiling. Dylan's best gig types (data cleanup, SOPs, spreadsheet work) are posted by non-technical people who don't use developer platforms. Outbound flips the model: instead of waiting for gigs to appear, Dylan proactively shows up where clients look.
+
+**Deliverables:**
+- [ ] GitHub Pages portfolio page — simple 1-pager: who Dylan is, what he does, sample work types, contact/Reddit link
+- [ ] [For Hire] post template for relevant subreddits (r/forhire, r/slavelabour, r/freelance_forhire)
+- [ ] First proposal submitted and logged in Airtable
+- [ ] First monthly pipeline review: source performance, scoring accuracy, time spent
+
+**Success criteria:** At least 1 proposal submitted. At least 1 reply or inquiry from any outbound channel.
+
+**Possible later additions (evaluate after first month of outbound):**
+- Auto-response templates for common client follow-up questions
+- Client relationship tracking (repeat clients flagged in Airtable)
+- Rate optimization based on win/loss data
 - Cloud scheduling revisit if a Reddit-unblocked data source is added
 
 ---
@@ -381,7 +394,7 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 4. **Every piece builds the portfolio.** The pipeline itself, the scripts, the process — all of this is demonstrable AE-relevant work. Treat the repo accordingly.
 
-5. **Fail fast, learn cheap.** If after Phase 3 there are zero wins, diagnose honestly and pivot or kill. Don't zombie.
+5. **Fail fast, learn cheap.** If after Phase 3 there are zero wins, diagnose honestly and pivot or kill. Don't zombie. *Applied at end of Phase 3: inbound ceiling diagnosed, Phase 4 pivot to outbound chosen over killing the project.*
 
 6. **Automate the boring, keep the judgment.** Claude handles production. Dylan handles decisions. Never let AI auto-submit anything without human review.
 
@@ -412,6 +425,7 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 - [x] Reddit API: Which auth method? → Resolved: no auth, public JSON endpoint
 - [x] Notifications: Slack or email? → Resolved: Discord webhook
+- [x] Additional sources beyond Reddit? → Resolved: HN added (monthly). Craigslist (403), RemoteOK (wrong market), Contra (design/product skew), Discord (auth required) all evaluated and eliminated.
 - [ ] Scoring prompt: token cost at scale? Monitor after first 30 days of real runs.
 - [ ] Pricing strategy: Undercut market to win first gigs, or price fair from day one?
 - [ ] Legal: Do we need a simple freelance contract template? Payment terms?
