@@ -9,13 +9,13 @@
 > **Claude: When Dylan says "pick up where we left off," read this block and resume accordingly.**
 
 **Current Phase:** 4 — Outbound + First Revenue
-**Current Micro-Task:** 4.2 — [For Hire] post template
-**Session Count:** 6
+**Current Micro-Task:** 4.3 — First real proposal submitted
+**Session Count:** 9
 **Progression Level:** Supervised
 **Last Session Date:** 2026-03-12
-**Last Session Summary:** Strategic review of Phase 4. Concluded Reddit outbound is structurally low-ROI (karma gates, wrong audience for Dylan's gig types) but portfolio page is worth building to close the project as a Bucket 2 artifact. Built index.html at repo root — clean no-framework 1-pager with service cards, process steps, and email CTA (mcgrath.fintech@gmail.com). Logged automated client/job acquisition research agent as a backlog item (Section 12). Reddit username placeholder removed; throwaway account (Massive_Match_8103) was never used and correctly dropped.
-**Blockers / Open Issues:** Dylan needs to enable GitHub Pages in repo settings (Settings → Pages → main branch, root folder). Portfolio page is otherwise complete.
-**Next Action:** Phase 4.2 — write one [For Hire] post template (r/forhire format). Then gate task: submit at least one real proposal against an inbound gig from the pipeline. No further development until a real proposal is submitted.
+**Last Session Summary:** Strategic pivot — retuned entire pipeline from non-technical gig types (spreadsheets, SOPs) to technical ones (web scraping, Python scripts, API integrations). Root cause: non-technical gigs are posted on gated platforms that can't be automated. Technical gigs ARE posted on Reddit/HN in high volume. Changed config.yaml keywords, rewrote scoring prompt (added qa_feasibility_score), created 3 new proposal templates, updated portfolio page to "Data & Automation Specialist," cleared seen_posts.json for fresh run. Pipeline test run found 1 match immediately — confirming higher volume with new keywords.
+**Blockers / Open Issues:** Waiting for tonight's 5pm pipeline run with new config. If still all SKIPs after 3-5 days, widen keywords.
+**Next Action:** 4.3 — Review tonight's Discord digest. If BID/MAYBE surfaces, submit first real proposal.
 
 ### How to resume
 
@@ -96,7 +96,7 @@ This project exists within a broader personal strategy:
 
 **Sources evaluated and eliminated:** Contra (design/product skew), Discord (auth required), Craigslist (RSS 403 from all endpoints), RemoteOK (90% full-time engineering roles).
 
-**Structural note:** Inbound monitoring has a ceiling for Dylan's gig types. Data cleanup, SOPs, and spreadsheet work are posted by non-technical people who don't use developer platforms. Phase 4 outbound is needed to complement passive monitoring.
+**Structural note (updated 2026-03-12):** Original gig types (data cleanup, SOPs, spreadsheets) hit a ceiling — posted by non-technical people on gated platforms. Pipeline retuned to target technical gig types (web scraping, Python scripts, API integrations) which ARE posted in high volume on Reddit/HN. Hard constraint: manual platform browsing is a failure condition — all discovery must be automated.
 
 **Output:** Raw list of candidate gigs with metadata (source, title, description, budget if stated, post date, poster history).
 
@@ -336,26 +336,28 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 ## 8. Gig Type Fit Matrix
 
-### Good Fits (high AI-leverage, clear scope)
-- Spreadsheet/CSV cleanup and formatting
-- Data entry and structuring
-- Document drafting from notes or outlines
-- Policy/procedure template creation
+### Good Fits (high AI-leverage, clear scope, Dylan can QA by running code)
+- Web scraping — extract data from specific sites, deliver as CSV/JSON
+- Python scripts — automate file processing, data transformation, scheduled tasks
+- API integrations — connect services, pull/push data between platforms
+- Data cleanup — restructure, de-dupe, standardize messy datasets
 - Data analysis with written summary
-- Report generation from raw data
+- ETL / data pipeline scripts
 
 ### Acceptable Fits (moderate AI-leverage, some judgment needed)
-- Requirements documentation
-- Process documentation
-- Presentation creation from content
-- Translation-adjacent work (formatting, not creative JP↔EN)
+- Technical writing / documentation
+- Report generation from raw data
+- Bot development (Discord, Telegram, etc.)
+- CSV/JSON parsing and transformation
 
-### Bad Fits (avoid — time sinks)
+### Bad Fits (avoid — time sinks or unverifiable)
+- Full application development ("build me an app")
 - Anything requiring live calls or meetings
-- Ongoing virtual assistant roles (scope creep)
-- Creative/subjective work (marketing copy, branding)
-- Anything requiring access to client systems/credentials
+- Ongoing maintenance contracts (scope creep)
+- Anything requiring access to client servers/credentials
 - Ambiguously scoped projects with no clear deliverable
+- Creative/subjective work (marketing copy, branding)
+- Work requiring proprietary tools Dylan doesn't have
 
 ---
 
@@ -381,6 +383,9 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 | 2026-03-12 | Expand Reddit to 5 subreddits | Added r/freelance_forhire, r/WorkOnline, r/HireaWriter. tag_exempt_subreddits config bypasses [Hiring] tag check for subs that don't use it. |
 | 2026-03-12 | Tighten keywords — remove "report" and "analysis" | Too broad — catching journalism and research writing posts. Replaced with "data report", "data analysis". Added "sop", "standard operating procedure", "data quality", "process documentation". |
 | 2026-03-12 | Acknowledge inbound ceiling; pivot to Phase 4 outbound | High AI-deliverability gigs are posted on non-developer platforms. Passive monitoring alone won't fund the tools — outbound needed. |
+| 2026-03-12 | Retune pipeline from non-technical to technical gig types | Non-technical gigs (spreadsheets, SOPs) are posted on gated platforms (Facebook, LinkedIn) that can't be automated. Technical gigs (web scraping, Python scripts, API integration) ARE posted on Reddit/HN in high volume. Claude can deliver these; Dylan can QA by running code and checking output. Same pipeline, different keywords. |
+| 2026-03-12 | Hard constraint: manual platform browsing is a failure condition | If the pipeline requires Dylan to manually browse Reddit/Facebook/LinkedIn to find leads, the project has failed. All discovery must be automated. Retuning keywords is the fix — not adding manual steps. |
+| 2026-03-12 | Add QA feasibility as scoring criterion | New `qa_feasibility_score` in scoring prompt ensures Dylan only bids on gigs where he can verify the output by running code locally. Avoids landing gigs he can't QA. |
 
 ---
 

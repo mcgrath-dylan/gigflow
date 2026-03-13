@@ -1,56 +1,83 @@
 # TIL — Today I Learned
 
-Running log of learning from each GigFlow build session.
+Running log of what was built and understood each session.
 
-Format:
-> **What I built:** [one sentence]
-> **What I learned:** [one concept or skill]
-> **What confused me:** [one thing, or "nothing" if clear]
+---
+
+## 2026-03-12 — Session 8
+
+**What I built:** Diagnosed a market mismatch — the original gig types targeted non-technical buyers on gated platforms. Retuned the pipeline to target technical gigs (web scraping, Python scripts, API integrations) that are actually posted on Reddit/HN. Changed keywords, rewrote the scoring prompt, added a QA feasibility criterion, and created three new proposal templates.
+
+**What I learned:** Config-driven architecture means pivoting your entire target market is a config change, not a rewrite. The same principle applies in dbt — separating profiles from model logic means you can change environments without touching code.
+
+**What confused me:** Nothing technically — this was a strategic session. The hard part was being honest about what couldn't be automated (Facebook groups, LinkedIn) rather than trying to engineer around a market structure problem.
+
+---
+
+## 2026-03-12 — Session 7
+
+**What I built:** [For Hire] post template (`docs/for_hire_template.md`) and confirmed the portfolio page was live on GitHub Pages.
+
+**What I learned:** The inbound/outbound distinction. Passive monitoring has a structural ceiling when your target buyers are on gated platforms — no amount of scraper tuning fixes a market access problem. Outbound flips the model: instead of waiting for gigs to appear, you show up where clients look.
+
+**What confused me:** Nothing blocked, but the realization that Reddit/HN might not surface enough volume even with better keywords was a legitimate surprise. That led directly to the Session 8 strategic pivot.
 
 ---
 
 ## 2026-03-12 — Session 6
 
-**What I built:** Built index.html portfolio page. 
-**What I learned:** Reddit outbound is also highly likely to be low-ROI.
-**What confused me:** Nothing.
- 
+**What I built:** `index.html` portfolio page, deployed via GitHub Pages.
+
+**What I learned:** Reddit outbound ([For Hire] posts) is also likely to be low-ROI for non-technical gig types. And that GitHub Pages deploys automatically from an `index.html` in the root of the main branch — no build step, no config.
+
+**What confused me:** Nothing blocked.
+
 ---
 
 ## 2026-03-12 — Session 5
 
-**What I built:** Added HN scraper, expanded Reddit to 5 subreddits, investigated and elimanated potential other sources.
-**What I learned:** Passive scrapers are unlikely to surface real opportunities.
-**What confused me:** How difficult it is to find high quality sources for allegedly in demand work.
- 
+**What I built:** HN scraper, expanded Reddit monitoring to 5 subreddits, evaluated and eliminated Craigslist, RemoteOK, Contra, and Discord as potential sources.
+
+**What I learned:** Passive scrapers are unlikely to surface real opportunities when the market lives on platforms that require auth. Every dead-end source had a legitimate technical reason — 403s, wrong market fit, or TOS barriers. Evaluating and eliminating options is itself useful engineering work.
+
+**What confused me:** How difficult it is to find high-quality, automatable sources for work that's allegedly in demand.
+
 ---
 
 ## 2026-03-11 — Session 4
 
-**What I built:** Finished Micro-task 2.2: Airtable tracking base with full schema, auto-logging wired into pipeline.
-**What I learned:** How to create a table in Airtable through the API and POST records to it.
-**What confused me:** The Airtable base ID debacle -> Build table on existing base.
+**What I built:** Airtable tracking base with full schema, auto-logging wired into the pipeline via `airtable_logger.py`.
+
+**What I learned:** How to create a table schema through the Airtable API and POST records to it programmatically. `setup_airtable.py` provisions the schema once — same concept as running `dbt run` to materialize models from code.
+
+**What confused me:** The Airtable base ID issue — tried creating a new base via API, which isn't supported on free tier. Solution: build the table on an existing base instead.
 
 ---
 
 ## 2026-03-11 — Session 3
 
-**What I built:** The proposal generation flow, the two-tier filtering design, and a proposal template library.
-**What I learned:** Use Haiku for cheap template fill-in. 
-**What confused me:** Why MAYBE proposal generation was still worth it from a token perspective -> favoring automation.
+**What I built:** Proposal generation flow, two-tier filtering design (cheap pre-screen before Claude API), and a proposal template library.
+
+**What I learned:** Use Claude Haiku for cheap, repetitive template fill-in and Sonnet for judgment-heavy scoring. The cost difference justifies routing by task type — same logic as using different compute tiers for different dbt model complexities.
+
+**What confused me:** Whether generating proposals for MAYBE posts was worth the token cost. Conclusion: yes — automation bias favors generating and discarding over manually reviewing later.
 
 ---
 
 ## 2026-03-11 — Session 2
 
-**What I built:** Finished Micro-tasks 1.2 through 1.11: Reddit scraper, keyword filtering, deduplication, Claude scoring, Discord notifications, Task Scheduler automation, and README.
-**What I learned:** How easy it is to set up webhooks to Discord for script notifications.
-**What confused me:** Reddit blocking GitHub Actions IPs -> pivoted to run locally via Task Scheduler instead.
+**What I built:** Reddit scraper, keyword filtering, deduplication, Claude scoring, Discord notifications, Task Scheduler automation, and the README. Micro-tasks 1.2 through 1.11.
+
+**What I learned:** Discord webhooks are trivially easy to set up — a single POST request with JSON, no auth beyond the URL itself. Same pattern as any other webhook integration.
+
+**What confused me:** Reddit blocking GitHub Actions IPs (403 on all datacenter requests). Pivoted to Windows Task Scheduler running locally on a residential IP — the constraint forced a simpler, more reliable solution.
 
 ---
 
 ## 2026-03-11 — Session 1
 
-**What I built:** I setup the Python virtual environment and repo with basic scaffolding for this project.
-**What I learned:** How to use Claude Code within VSCode.
-**What confused me:** Python not being found -> py --version worked.
+**What I built:** Python virtual environment and repo scaffolding.
+
+**What I learned:** How to use Claude Code within VSCode, and that virtual environments isolate project dependencies — the equivalent of separate dbt environments for dev vs. prod.
+
+**What confused me:** `python` not being found in PATH — `py --version` worked instead. Windows installs Python through the `py` launcher by default.

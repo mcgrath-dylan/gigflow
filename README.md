@@ -72,7 +72,7 @@ src/
 config/
   config.yaml          # Subreddits, keywords, filter settings, HN config, pre-screen rules
   scoring_prompt.txt   # Claude scoring instructions (edit to tune without code changes)
-  templates/           # Proposal templates: analysis, data-cleanup, doc-writing, general-short
+  templates/           # Proposal templates: web-scraping, python-script, api-integration, data-cleanup, analysis, general-short
 
 data/
   seen_posts.json      # Reddit state — processed post IDs (gitignored, generated at runtime)
@@ -120,8 +120,9 @@ python src/main.py
 Each gig is evaluated on:
 - **Clarity** (1–10): Is the deliverable well-defined?
 - **AI deliverability** (1–10): Can Claude handle 80%+ of the work?
-- **Estimated hours**: Dylan's QA, communication, and delivery time only
-- **Red flags**: Vague scope, no budget stated, test projects, requires meetings
+- **QA feasibility** (1–10): Can the output be verified by running the code and spot-checking results?
+- **Estimated hours**: QA, communication, and delivery time only
+- **Red flags**: Vague scope, no budget, "build me an app", requires server access
 - **Recommendation**: `BID` / `MAYBE` / `SKIP`
 
 BID and MAYBE posts get a draft proposal appended to the Discord notification and are automatically logged to Airtable.

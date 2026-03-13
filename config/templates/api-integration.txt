@@ -1,0 +1,9 @@
+Hi [POSTER_NAME_OR_OP],
+
+I can build this integration. I'll connect to [API_OR_SERVICE] and [WHAT_THE_INTEGRATION_DOES — e.g. "pull your data into a structured CSV", "sync records between X and Y", "automate the data pull on a schedule"].
+
+I'll deliver working code plus setup instructions. [TIMELINE].
+
+[BUDGET_LINE — either "Happy to work within your $X budget." or "What's your budget for this?"]
+
+— Dylan

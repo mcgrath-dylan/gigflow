@@ -21,7 +21,7 @@ def format_post(post: dict) -> str:
         f"{emoji} **{post['title']}**",
         source_line,
         f"🔗 {post['url']}",
-        f"**Scores:** Clarity {post['clarity_score']}/10 | AI Deliverability {post['ai_deliverability_score']}/10 | ~{post['estimated_dylan_hours']}h Dylan time",
+        f"**Scores:** Clarity {post['clarity_score']}/10 | AI Deliverability {post['ai_deliverability_score']}/10 | QA Feasibility {post.get('qa_feasibility_score', 'N/A')}/10 | ~{post['estimated_dylan_hours']}h Dylan time",
         f"**Recommendation:** {rec} — {post['reasoning']}",
     ]
     if post["red_flags"]:

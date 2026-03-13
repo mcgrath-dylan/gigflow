@@ -6,24 +6,29 @@ subreddits:
   - HireaWriter
 
 keywords:
+  # Technical gig types (high volume on Reddit/HN)
+  - web scraping
+  - web scraper
+  - scraper
+  - scraping
+  - python script
+  - python bot
+  - automation
+  - automate
+  - api integration
+  - data pipeline
+  - etl
+  - data extraction
+  - data transformation
+  - technical writing
+  # Data work (works for both markets)
   - data cleanup
   - data cleaning
-  - data entry
-  - data migration
-  - data formatting
-  - data governance
   - data quality
-  - data report
   - data analysis
-  - spreadsheet
+  - data report
   - csv
-  - excel
-  - google sheets
-  - documentation
-  - process documentation
-  - sop
-  - standard operating procedure
-  - policy
+  - json parsing
 
 filters:
   max_age_hours: 48
@@ -55,3 +60,9 @@ pre_screen:
     - "test project"
     - "test task"
     - "unpaid"
+    - "full-time"
+    - "full time"
+    - "permanent"
+    - "equity only"
+    - "need access to my server"
+    - "ongoing maintenance"

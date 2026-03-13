@@ -1,0 +1,9 @@
+Hi [POSTER_NAME_OR_OP],
+
+I'll write a Python script that [SPECIFIC_TASK_FROM_POSTING — e.g. "automates your daily report generation", "converts your files from X to Y format", "processes your data and outputs the results"].
+
+I'll deliver the script plus a short README so you can run it yourself. [TIMELINE].
+
+[BUDGET_LINE — either "Happy to work within your $X budget." or "What's your budget for this?"]
+
+— Dylan
