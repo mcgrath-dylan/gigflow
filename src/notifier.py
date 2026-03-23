@@ -31,8 +31,9 @@ def format_post(post: dict) -> str:
     if post["red_flags"]:
         lines.append(f"⚠️ Red flags: {', '.join(post['red_flags'])}")
     if post.get("proposal"):
-        label = "📝 **Draft proposal:**" if rec == "BID" else "📝 **Draft proposal** *(MAYBE — review carefully before sending):*"
-        lines.append(f"\n{label}\n```\n{post['proposal']}\n```")
+        lines.append(f"\n📝 **Draft proposal:**\n```\n{post['proposal']}\n```")
+    if post.get("gmail_draft"):
+        lines.append("📧 Gmail draft created — check your Drafts folder")
 
     return "\n".join(lines)
 
@@ -46,16 +47,30 @@ def send_digest(scored_posts: list[dict]) -> None:
     bids = [p for p in scored_posts if p["recommendation"] == "BID"]
     maybes = [p for p in scored_posts if p["recommendation"] == "MAYBE"]
     skips = [p for p in scored_posts if p["recommendation"] == "SKIP"]
-    actionable = bids + maybes
 
     header = f"## 🔍 GigFlow Digest — {len(bids)} BID, {len(maybes)} MAYBE, {len(skips)} SKIP ({len(scored_posts)} total scored)\n"
     requests.post(WEBHOOK_URL, json={"content": header})
 
-    # Full detail for BID and MAYBE posts
-    for post in actionable:
+    # Full detail for BID posts only
+    for post in bids:
         requests.post(WEBHOOK_URL, json={"content": format_post(post)})
 
-    # Compact one-liner for each SKIP so we can see why posts were rejected
+    # Compact one-liners for MAYBE posts (no proposals drafted)
+    if maybes:
+        maybe_lines = []
+        for p in maybes:
+            c = p.get("clarity_score", "?")
+            a = p.get("ai_deliverability_score", "?")
+            q = p.get("qa_feasibility_score", "?")
+            reason = p.get("reasoning", "no reason given")
+            title = p.get("title", "Untitled")[:60]
+            maybe_lines.append(f"🟡 **{title}** — C:{c} A:{a} Q:{q} — {reason}")
+        maybe_block = "**MAYBEs:**\n" + "\n".join(maybe_lines)
+        while maybe_block:
+            chunk, maybe_block = maybe_block[:1900], maybe_block[1900:]
+            requests.post(WEBHOOK_URL, json={"content": chunk})
+
+    # Compact one-liners for SKIP posts
     if skips:
         skip_lines = []
         for p in skips:
@@ -66,7 +81,6 @@ def send_digest(scored_posts: list[dict]) -> None:
             title = p.get("title", "Untitled")[:60]
             skip_lines.append(f"🔴 **{title}** — C:{c} A:{a} Q:{q} — {reason}")
         skip_block = "**SKIPs:**\n" + "\n".join(skip_lines)
-        # Discord 2000-char limit — split if needed
         while skip_block:
             chunk, skip_block = skip_block[:1900], skip_block[1900:]
             requests.post(WEBHOOK_URL, json={"content": chunk})

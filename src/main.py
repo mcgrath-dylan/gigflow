@@ -12,6 +12,13 @@ from scorer import score_post
 from proposer import draft_proposal
 from notifier import send_digest
 from airtable_logger import log_gig
+from email_extractor import extract_email
+
+try:
+    from gmail_drafter import create_draft
+    GMAIL_AVAILABLE = True
+except ImportError:
+    GMAIL_AVAILABLE = False
 
 
 def run():
@@ -70,6 +77,7 @@ def run():
     for post in to_score:
         print(f"Scoring: {post['title'][:60]}...")
         result = score_post(post)
+        result["contact_email"] = extract_email(result.get("body", ""))
         scored.append(result)
         print(f"  -> {result['recommendation']} (clarity {result['clarity_score']}, ai {result['ai_deliverability_score']})")
 
@@ -77,11 +85,26 @@ def run():
     order = {"BID": 0, "MAYBE": 1, "SKIP": 2}
     scored.sort(key=lambda p: order.get(p["recommendation"], 3))
 
-    # Draft proposals + log to Airtable: BID and MAYBE = auto, SKIP = none
+    # Draft proposals for BID only; log BID + MAYBE to Airtable
     for post in scored:
-        if post["recommendation"] in ("BID", "MAYBE"):
+        if post["recommendation"] == "BID":
             print(f"Drafting proposal for: {post['title'][:60]}...")
             post["proposal"] = draft_proposal(post)
+            log_gig(post)
+
+            # Create Gmail draft if we have a contact email (skip Freelancer — bids go through their platform)
+            if GMAIL_AVAILABLE and post.get("contact_email") and post.get("source") != "freelancer":
+                try:
+                    subject = f"Re: {post['title'][:80]}"
+                    create_draft(post["contact_email"], subject, post["proposal"])
+                    post["gmail_draft"] = True
+                    print(f"  [gmail] Draft created for {post['contact_email']}")
+                except Exception as e:
+                    print(f"  [gmail] Draft failed: {e}")
+                    post["gmail_draft"] = False
+
+        elif post["recommendation"] == "MAYBE":
+            post["proposal"] = None
             log_gig(post)
         else:
             post["proposal"] = None

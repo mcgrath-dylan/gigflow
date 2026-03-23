@@ -9,20 +9,20 @@ A real, running pipeline that finds freelance gigs, scores them for fit, drafts 
 ## What it does
 
 ```
-Reddit (5 subreddits, daily) + Hacker News "Who is hiring?" (monthly)
+Reddit (5 subreddits) + HN "Who is hiring?" + Freelancer.com + Google Alerts
         ↓
   Filter + Deduplicate        ← config-driven, state-tracked per source
         ↓
-  Score with Claude API       ← structured prompt, JSON output
+  Score with Claude API       ← Sonnet for structured scoring, JSON output
         ↓
-  Draft Proposal              ← template library + Claude customization
+  Draft Proposal (BID only)   ← Haiku + template library, MAYBE/SKIP skip this step
         ↓
-  Discord Digest (5pm daily)  ← BID / MAYBE / SKIP ranked output
+  Discord Digest (5pm daily)  ← BID full detail / MAYBE+SKIP compact one-liners
         ↓
   Log to Airtable             ← BID + MAYBE posts auto-tracked
 ```
 
-Each run: fetches new posts → filters by keyword and recency → deduplicates against state → scores each match → generates a tailored proposal → delivers a ranked digest → logs actionable gigs for tracking.
+Each run: fetches new posts from 4 sources → filters by keyword and recency → deduplicates against state → scores each match → generates a tailored proposal for BID gigs → delivers a ranked digest → logs actionable gigs for tracking.
 
 ---
 
@@ -33,7 +33,7 @@ This project was built deliberately to practice Analytics Engineering-adjacent s
 | Skill | Where it shows up |
 |---|---|
 | Python data pipeline design | `main.py` orchestrates modular stages end-to-end |
-| API integration | Reddit JSON, HN Algolia search API, Anthropic (Claude), Airtable, Discord webhook |
+| API integration | Reddit JSON, HN Algolia, Freelancer.com REST, Google Alerts RSS, Anthropic (Claude), Airtable, Discord webhook |
 | Config-driven architecture | `config.yaml` separates settings from logic (like dbt profiles) |
 | Incremental state management | `seen_posts.json` prevents reprocessing (like dbt incremental models) |
 | Data modeling | Airtable schema designed and provisioned via API (`setup_airtable.py`) |
@@ -48,8 +48,9 @@ This project was built deliberately to practice Analytics Engineering-adjacent s
 | Component | Tool | Why |
 |---|---|---|
 | Language | Python 3.13 | AE-standard, good API ecosystem |
-| Gig sources | Reddit JSON API (5 subreddits, daily) + HN Algolia API (monthly) | No auth required on either; HN runs once per month via state file |
-| AI scoring + proposals | Claude API (Sonnet) | Structured output, ~$5/mo at current volume |
+| Gig sources | Reddit JSON (5 subs, daily) + HN Algolia (monthly) + Freelancer.com REST (daily) + Google Alerts RSS (daily) | No auth required on any source |
+| AI scoring | Claude API (Sonnet) | Structured scoring with JSON output, ~$5/mo |
+| AI proposals | Claude API (Haiku) | Cheap template fill-in for BID gigs only |
 | Tracking | Airtable | Visual CRM, free tier, schema provisioned via API |
 | Notifications | Discord webhook | Zero-friction, no SMTP config required |
 | Scheduling | Windows Task Scheduler | Local residential IP bypasses Reddit's datacenter blocks |
@@ -63,19 +64,22 @@ src/
   main.py              # Pipeline orchestrator — runs all stages in order
   reddit_scraper.py    # Fetch, filter, and deduplicate Reddit posts
   hn_scraper.py        # HN "Who is hiring?" thread discovery, Algolia keyword search, monthly state
-  scorer.py            # Claude API scoring — returns BID / MAYBE / SKIP + rationale
-  proposer.py          # Claude API proposal generation from template library
+  freelancer_scraper.py # Freelancer.com public API — active fixed-price projects
+  google_alerts_scraper.py # Google Alerts RSS feed parsing
+  scorer.py            # Claude Sonnet scoring — returns BID / MAYBE / SKIP + rationale
+  proposer.py          # Claude Haiku proposal generation from template library (BID only)
   notifier.py          # Discord digest formatting and delivery
   airtable_logger.py   # Log BID/MAYBE gigs to Airtable automatically
+  email_extractor.py   # Extract contact emails from post bodies
   setup_airtable.py    # One-time: create Gigs table schema via Airtable API
 
 config/
-  config.yaml          # Subreddits, keywords, filter settings, HN config, pre-screen rules
+  config.yaml          # Sources, keywords, filter settings, pre-screen rules
   scoring_prompt.txt   # Claude scoring instructions (edit to tune without code changes)
-  templates/           # Proposal templates: web-scraping, python-script, api-integration, data-cleanup, analysis, general-short
+  templates/           # 7 proposal templates matched to gig_type from scoring
 
 data/
-  seen_posts.json      # Reddit state — processed post IDs (gitignored, generated at runtime)
+  seen_posts.json      # Dedup state — processed post IDs across all sources (gitignored)
   hn_state.json        # HN state — last processed thread ID, enforces monthly-only runs (gitignored)
 
 docs/
@@ -125,7 +129,7 @@ Each gig is evaluated on:
 - **Red flags**: Vague scope, no budget, "build me an app", requires server access
 - **Recommendation**: `BID` / `MAYBE` / `SKIP`
 
-BID and MAYBE posts get a draft proposal appended to the Discord notification and are automatically logged to Airtable.
+BID posts get a full detail block with draft proposal in Discord and are logged to Airtable. MAYBE posts are logged to Airtable but shown as compact one-liners in Discord (no proposal drafted). SKIP posts appear as one-liners for visibility.
 
 ---
 

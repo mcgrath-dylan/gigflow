@@ -4,6 +4,8 @@ venv/
 
 # Secrets — CRITICAL: never commit credentials or API keys
 .env
+config/gmail_credentials.json
+data/gmail_token.json
 
 # Python bytecode — auto-generated, not needed in git
 __pycache__/

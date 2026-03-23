@@ -4,6 +4,16 @@ Running log of what was built and understood each session.
 
 ---
 
+## 2026-03-23 — Session 11
+
+**What I built:** Stopped drafting proposals for MAYBE posts (BID-only now) to save tokens. Built a Gmail draft feature for auto-creating email drafts when BID posts have contact emails — but put it on ice since I can't access the project email right now. Also ran a full repo audit and cleaned up stale docs, dead dependencies, and config mismatches.
+
+**What I learned:** The try/except import pattern for optional features ("feature flag via dependency") — the pipeline works fine whether or not Gmail packages are installed. Same idea as optional providers in Airflow. Also: repo audits are basically data governance for code — checking that docs match reality and cleaning up what drifted.
+
+**What confused me:** Nothing blocked. Straightforward session.
+
+---
+
 ## 2026-03-22 — Session 10
 
 **What I built:** Added Freelancer.com as a new source (public API, no auth) and Google Alerts via RSS feeds. Also added SKIP visibility to Discord so I can actually see why posts get rejected instead of just "none actionable today." First test run scored 26 posts and produced 5 MAYBEs — more actionable results in one run than the previous 10 days combined.
@@ -80,7 +90,7 @@ Running log of what was built and understood each session.
 
 **What I learned:** Use Claude Haiku for cheap, repetitive template fill-in and Sonnet for judgment-heavy scoring. The cost difference justifies routing by task type — same logic as using different compute tiers for different dbt model complexities.
 
-**What confused me:** Whether generating proposals for MAYBE posts was worth the token cost. Conclusion: yes — automation bias favors generating and discarding over manually reviewing later.
+**What confused me:** Whether generating proposals for MAYBE posts was worth the token cost. Conclusion at the time: yes. *Update (Session 11): Reversed this — after real data showed MAYBEs were never acted on, switched to BID-only proposal drafting.*
 
 ---
 

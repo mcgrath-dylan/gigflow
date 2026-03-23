@@ -80,6 +80,11 @@ google_alerts:
     - "https://www.google.com/alerts/feeds/13659000287574271115/1141669749260850374"
     - "https://www.google.com/alerts/feeds/13659000287574271115/3592513687534663865"
 
+gmail:
+  enabled: true
+  credentials_file: config/gmail_credentials.json
+  token_file: data/gmail_token.json
+
 pre_screen:
   min_body_words: 30
   skip_phrases:

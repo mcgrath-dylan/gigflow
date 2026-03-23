@@ -10,33 +10,33 @@ r/forhire requires a rate — "starting at $X" satisfies this rule.
 
 **Title:**
 ```
-[For Hire] Data Cleanup / Process Documentation / Spreadsheet Work | Starting at $25 | Fast turnaround
+[For Hire] Web Scraping / Python Scripts / API Integration | Starting at $30 | Fast turnaround
 ```
 
 > Swap `[TASK TYPE]` examples:
-> - "Data Cleanup & Spreadsheet Formatting"
-> - "SOP / Process Documentation"
-> - "Spreadsheet Cleanup & Structuring"
-> - "Data Entry, Cleanup & Reporting"
+> - "Web Scraping & Data Extraction"
+> - "Python Automation Scripts"
+> - "API Integration & Data Pipelines"
+> - "Data Cleanup & Transformation"
 
 ---
 
 **Body:**
 
-> Hi r/forhire — I'm a Business Analyst with a background in data governance and process documentation. I help small teams and solo operators clean up their data, write clear process docs, and get their spreadsheets into a usable state.
+> Hi r/forhire — I build Python scripts, web scrapers, and API integrations for small teams and solo operators. Need data pulled from a website, a repetitive task automated, or two services connected? I can help.
 >
 > **What I can do for you:**
-> - Clean and restructure messy spreadsheets or CSV files
-> - Write SOPs, process guides, or policy documents from your notes or rough outline
-> - Organize data and produce a short written summary of what it shows
-> - Turn a chaotic spreadsheet into something you can actually hand to someone else
+> - Scrape websites and deliver structured data as CSV, JSON, or Excel
+> - Write Python scripts to automate file processing, data transformation, or scheduled tasks
+> - Build API integrations to connect services and move data between platforms
+> - Clean and restructure messy datasets into something usable
 >
 > **How it works:**
-> You tell me what you have and what you need. I give you a fixed quote before we start — no hourly guessing. Small tasks typically run $25–50. Larger projects $75–150. I'll tell you upfront if something is out of scope.
+> You tell me what you have and what you need. I give you a fixed quote before we start — no hourly guessing. Small tasks typically run $30–75. Larger projects $100–200. I'll tell you upfront if something is out of scope.
 >
 > **Turnaround:** 24–48 hours for most tasks.
 >
-> **Background:** 5+ years in data governance and business analysis. I work with data standards, documentation, and stakeholder communication daily.
+> **Background:** Business Analyst with 5+ years in data governance and process automation. I work with Python, APIs, and data pipelines daily.
 >
 > DM me or email mcgrath.fintech@gmail.com with a quick description of what you need.
 
@@ -45,6 +45,6 @@ r/forhire requires a rate — "starting at $X" satisfies this rule.
 ## Notes
 
 - **Post cadence:** Once per month max per subreddit (r/forhire enforces this).
-- **Refresh tip:** Change the title's task type emphasis each month to target different buyers. Lead with "SOP / Process Docs" one month, "Spreadsheet Cleanup" the next.
+- **Refresh tip:** Change the title's task type emphasis each month to target different buyers. Lead with "Web Scraping" one month, "Python Automation" the next.
 - **After posting:** Log the post date in Airtable so you track the 30-day cooldown per sub.
 - **If you get a DM:** Respond within a few hours. First reply = biggest factor in converting interest to a project.

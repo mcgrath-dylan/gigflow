@@ -1,6 +1,6 @@
 # Project North Star: AI-Assisted Freelance Pipeline
 
-## Last Updated: March 22, 2026
+## Last Updated: March 23, 2026
 
 ---
 
@@ -10,12 +10,12 @@
 
 **Current Phase:** 4 — Outbound + First Revenue
 **Current Micro-Task:** 4.3 — First real proposal submitted
-**Session Count:** 10
+**Session Count:** 11
 **Progression Level:** Supervised
-**Last Session Date:** 2026-03-22
-**Last Session Summary:** Reddit/HN confirmed low-signal after 10+ days (3 more runs since Session 9, all "1 scored, none actionable"). Recalibrated: added Freelancer.com as a high-signal source (public API, no auth, 25 projects/run with budgets and skill tags). First test run scored 26 posts and produced 5 MAYBE results — pipeline went from 0-1 posts/day to 26 in one run. Also added Google Alerts RSS (4 feeds, awaiting first results in 24-48h), added SKIP visibility to Discord (compact one-liners with scores + reasoning), fixed load_dotenv override issue, rejected Jobicy (zero freelance dev jobs). Added "Google Alerts expansion" to backlog.
-**Blockers / Open Issues:** Google Alerts feeds just created — will start producing results in 24-48h. Freelancer.com source is live and will run at tonight's 5pm scheduled task.
-**Next Action:** 4.3 — Review tonight's Discord digest. With Freelancer.com producing MAYBEs, a BID is likely soon. Review SKIP reasoning to decide if scoring thresholds need loosening. When a BID surfaces, submit first real proposal.
+**Last Session Date:** 2026-03-23
+**Last Session Summary:** Token efficiency optimization — stopped drafting proposals for MAYBE posts (BID-only now), saving ~5 Haiku API calls per run. MAYBE posts now display as compact one-liners in Discord (like SKIPs) instead of full blocks with proposals. Built Gmail draft feature (email extraction, Gmail API drafter, OAuth setup script) for auto-creating Gmail drafts when BID posts contain contact emails — but put on ice pending email account access (no 2FA, forgot password). All code is in place with graceful degradation (GMAIL_AVAILABLE flag).
+**Blockers / Open Issues:** Gmail draft feature on hold — Dylan needs to reset project email password and set up 2FA before running OAuth setup. Google Alerts feeds should be producing results by now (created 2026-03-22).
+**Next Action:** 4.3 — Review tonight's Discord digest (5pm run). Token cost should be noticeably lower with MAYBE proposals eliminated. When a BID surfaces, submit first real proposal.
 
 ### How to resume
 
@@ -122,11 +122,13 @@ This project exists within a broader personal strategy:
 #### Layer 3: Proposal Drafting
 **Purpose:** Generate ready-to-send (or near-ready) proposals tailored to each gig.
 
-**Template library (build iteratively):**
-- `data-cleanup`: "I'll clean and structure your data..."
-- `doc-writing`: "I'll turn your notes/requirements into a polished document..."
-- `analysis`: "I'll analyze your data and deliver a clear report..."
-- `policy-template`: "I'll draft a [policy/standard/procedure] document..."
+**Template library (7 templates, matched to gig_type from scoring):**
+- `web-scraping`: Extract data from sites, deliver as CSV/JSON
+- `python-script`: Build automation scripts, data processing
+- `api-integration`: Connect services, pull/push data
+- `data-cleanup`: Restructure and standardize messy datasets
+- `analysis`: Analyze data and deliver report with insights
+- `doc-writing`: Turn notes/requirements into polished documents
 - `general-short`: Catch-all for small tasks
 
 **Each proposal must:**
@@ -171,7 +173,7 @@ This project exists within a broader personal strategy:
 | HN data | Algolia search API + HN Firebase API | Free | No auth required; monthly cadence; searches within HN thread by keyword |
 | Freelancer.com data | `requests` + public REST API | Free | No auth required; daily cadence; filters by job category and project type |
 | Google Alerts data | `feedparser` + RSS feeds | Free | Wide-net discovery; Google indexes forums, job boards, niche sites |
-| AI Engine | Claude API (Sonnet for scoring + proposals) | ~$5/mo | Already in ecosystem |
+| AI Engine | Claude API (Sonnet for scoring, Haiku for BID proposals only) | ~$5/mo | Already in ecosystem |
 | Scheduling | Windows Task Scheduler (local) | Free | Reddit blocks GitHub Actions/datacenter IPs; local runner on residential IP works fine |
 | CRM/Tracker | Airtable | Free tier | Visual, no-code, fast to set up; auto-logged via airtable_logger.py |
 | Notifications | Discord webhook | Free | Zero-friction setup; Gmail app passwords require 2FA |
@@ -292,10 +294,10 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 **Goal:** End-to-end flow from scored gig → draft proposal → tracking.
 
 **Deliverables:**
-- [x] Proposal template library (3-4 templates)
+- [x] Proposal template library (7 templates)
 - [x] Claude API integration for proposal customization
 - [x] Airtable base with gig tracking schema
-- [x] Discord notification includes draft proposal alongside scored gig
+- [x] Discord notification includes draft proposal for BID gigs (MAYBE shows as compact one-liners)
 - [x] Simple "log this gig" workflow (airtable_logger.py auto-logs BID+MAYBE posts)
 
 **Success criteria:** Pipeline built and functional — per-gig time target achievable. First proposal submission is now the Phase 4 operational target.
@@ -309,7 +311,7 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 **Deliverables:**
 - [x] At least 1 additional source integrated — HN "Who is hiring?" added (monthly, Algolia); Reddit expanded to 5 subreddits
 - [x] Scoring keywords tightened — false positives ("report", "analysis") replaced with compound terms; "sop", "data quality", "process documentation" added
-- [ ] Template library expanded based on actual gig types — deferred: no real gigs yet to base this on
+- [x] Template library expanded to 7 templates covering technical gig types (web-scraping, python-script, api-integration, data-cleanup, analysis, doc-writing, general-short)
 - [ ] First monthly review — deferred: pipeline needs a full month of live runs first
 
 **Success criteria:** Two sources operational. Keywords tightened — measurably fewer false positives. Structural ceiling identified: inbound alone won't meet Bucket 1 target. Phase 4 outbound warranted.
@@ -398,6 +400,8 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 | 2026-03-22 | Add Google Alerts RSS as a source | Wide-net discovery via Google indexing. 4 alert feeds created. Zero auth, `feedparser` library, trivially parseable. Alerts take 24-48h to start producing results. |
 | 2026-03-22 | Add SKIP visibility to Discord digest | SKIP posts were being suppressed — no way to see WHY posts were rejected. Added compact one-liners showing title, 3 scores, and reasoning for every SKIP. Critical for diagnosing scoring thresholds. |
 | 2026-03-22 | Fix load_dotenv to use override=True from project root | Empty system env var for ANTHROPIC_API_KEY was shadowing the .env value. Fixed in main.py entry point. |
+| 2026-03-23 | Stop drafting proposals for MAYBE posts (BID-only) | MAYBE proposals were never submitted — wasted Haiku API calls and Discord space. MAYBEs now show as compact one-liners. Saves ~5 API calls per run. |
+| 2026-03-23 | Build Gmail draft feature for BID proposals (on ice) | Code complete: email extraction, Gmail API drafter, OAuth setup script. Graceful degradation via GMAIL_AVAILABLE flag. On hold — Dylan needs to reset project email password and set up 2FA for Google Cloud OAuth. |
 
 ---
 
