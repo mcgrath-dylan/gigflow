@@ -4,6 +4,7 @@ subreddits:
   - freelance_forhire
   - WorkOnline
   - HireaWriter
+  - learnpython
 
 keywords:
   # Technical gig types (high volume on Reddit/HN)
@@ -21,6 +22,15 @@ keywords:
   - data extraction
   - data transformation
   - technical writing
+  # Specific tools people name in posts
+  - selenium
+  - pandas
+  - google sheets
+  - excel
+  - sql
+  - airtable
+  - parse
+  - parsing
   # Data work (works for both markets)
   - data cleanup
   - data cleaning
@@ -34,6 +44,7 @@ filters:
   max_age_hours: 48
   min_title_tag: "[hiring]"
   tag_exempt_subreddits:
+    - freelance_forhire
     - WorkOnline
     - HireaWriter
 
@@ -48,6 +59,26 @@ hn:
     - part time
     - consulting
     - consultant
+
+freelancer:
+  enabled: true
+  # Freelancer.com job category IDs: 13=Python, 116=Web Scraping,
+  # 36=Data Processing, 43=Data Entry
+  job_ids:
+    - 13
+    - 116
+    - 36
+    - 43
+  limit: 25
+  min_budget_usd: 20
+
+google_alerts:
+  enabled: true
+  feeds:
+    - "https://www.google.com/alerts/feeds/13659000287574271115/6993236278715754483"
+    - "https://www.google.com/alerts/feeds/13659000287574271115/2719749338087460902"
+    - "https://www.google.com/alerts/feeds/13659000287574271115/1141669749260850374"
+    - "https://www.google.com/alerts/feeds/13659000287574271115/3592513687534663865"
 
 pre_screen:
   min_body_words: 30

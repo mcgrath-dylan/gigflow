@@ -4,6 +4,26 @@ Running log of what was built and understood each session.
 
 ---
 
+## 2026-03-22 — Session 10
+
+**What I built:** Added Freelancer.com as a new source (public API, no auth) and Google Alerts via RSS feeds. Also added SKIP visibility to Discord so I can actually see why posts get rejected instead of just "none actionable today." First test run scored 26 posts and produced 5 MAYBEs — more actionable results in one run than the previous 10 days combined.
+
+**What I learned:** Adding a new data source to an existing pipeline is straightforward when the pipeline is designed around a common intermediate format. Both new scrapers output the same dict shape as Reddit and HN, so scoring, proposals, and notifications just work. Same idea as adding a new `source()` in dbt that feeds into an existing staging model.
+
+**What confused me:** Nothing blocked. The `load_dotenv` override thing was mildly annoying — an empty system env var was shadowing the `.env` value — but the fix was one line.
+
+---
+
+## 2026-03-20 — Session 9
+
+**What I built:** Nothing new. Reviewed 7 days of pipeline output (no actionable leads), widened keywords in config, added r/learnpython as a source, and added the AI case study to the backlog.
+
+**What I learned:** Nothing that wasn't already known. This was a maintenance session — diagnosing low volume and adjusting config. The config-driven architecture made the change trivial, which is the point.
+
+**What confused me:** Nothing. Worth noting: not every session produces a learning. This one produced a data point — the pipeline works, the market is thin, and systematic iteration (keywords → scoring → sources) is the right response.
+
+---
+
 ## 2026-03-12 — Session 8
 
 **What I built:** Diagnosed a market mismatch — the original gig types targeted non-technical buyers on gated platforms. Retuned the pipeline to target technical gigs (web scraping, Python scripts, API integrations) that are actually posted on Reddit/HN. Changed keywords, rewrote the scoring prompt, added a QA feasibility criterion, and created three new proposal templates.

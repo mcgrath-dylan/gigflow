@@ -12,3 +12,6 @@ pyyaml==6.0.2
 
 # HTTP requests (backup, in case we need it for non-PRAW sources)
 requests==2.32.3
+
+# RSS feed parsing (Google Alerts scraper)
+feedparser==6.0.12

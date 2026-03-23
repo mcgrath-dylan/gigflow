@@ -1,6 +1,6 @@
 # Project North Star: AI-Assisted Freelance Pipeline
 
-## Last Updated: March 12, 2026
+## Last Updated: March 22, 2026
 
 ---
 
@@ -10,12 +10,12 @@
 
 **Current Phase:** 4 — Outbound + First Revenue
 **Current Micro-Task:** 4.3 — First real proposal submitted
-**Session Count:** 9
+**Session Count:** 10
 **Progression Level:** Supervised
-**Last Session Date:** 2026-03-12
-**Last Session Summary:** Strategic pivot — retuned entire pipeline from non-technical gig types (spreadsheets, SOPs) to technical ones (web scraping, Python scripts, API integrations). Root cause: non-technical gigs are posted on gated platforms that can't be automated. Technical gigs ARE posted on Reddit/HN in high volume. Changed config.yaml keywords, rewrote scoring prompt (added qa_feasibility_score), created 3 new proposal templates, updated portfolio page to "Data & Automation Specialist," cleared seen_posts.json for fresh run. Pipeline test run found 1 match immediately — confirming higher volume with new keywords.
-**Blockers / Open Issues:** Waiting for tonight's 5pm pipeline run with new config. If still all SKIPs after 3-5 days, widen keywords.
-**Next Action:** 4.3 — Review tonight's Discord digest. If BID/MAYBE surfaces, submit first real proposal.
+**Last Session Date:** 2026-03-22
+**Last Session Summary:** Reddit/HN confirmed low-signal after 10+ days (3 more runs since Session 9, all "1 scored, none actionable"). Recalibrated: added Freelancer.com as a high-signal source (public API, no auth, 25 projects/run with budgets and skill tags). First test run scored 26 posts and produced 5 MAYBE results — pipeline went from 0-1 posts/day to 26 in one run. Also added Google Alerts RSS (4 feeds, awaiting first results in 24-48h), added SKIP visibility to Discord (compact one-liners with scores + reasoning), fixed load_dotenv override issue, rejected Jobicy (zero freelance dev jobs). Added "Google Alerts expansion" to backlog.
+**Blockers / Open Issues:** Google Alerts feeds just created — will start producing results in 24-48h. Freelancer.com source is live and will run at tonight's 5pm scheduled task.
+**Next Action:** 4.3 — Review tonight's Discord digest. With Freelancer.com producing MAYBEs, a BID is likely soon. Review SKIP reasoning to decide if scoring thresholds need loosening. When a BID surfaces, submit first real proposal.
 
 ### How to resume
 
@@ -90,11 +90,13 @@ This project exists within a broader personal strategy:
 **Purpose:** Automatically discover relevant gig postings from multiple sources.
 
 **Sources (active):**
-1. Reddit (r/forhire, r/slavelabour, r/freelance_forhire, r/WorkOnline, r/HireaWriter) — public JSON endpoint, no auth required; daily cadence
+1. Reddit (r/forhire, r/slavelabour, r/freelance_forhire, r/WorkOnline, r/HireaWriter, r/learnpython) — public JSON endpoint, no auth required; daily cadence
 2. Hacker News "Who is hiring?" — monthly thread, Algolia search API, no auth required; runs once per month via state file
-3. LinkedIn job alerts — passive input, no automation
+3. Freelancer.com — public REST API, no auth required; daily cadence; filters by job category (Python, Web Scraping, Data Processing, Data Entry) and fixed-price projects with min $20 USD budget
+4. Google Alerts — RSS feeds from custom alert queries; daily cadence; wide-net discovery across forums, job boards, and niche sites indexed by Google
+5. LinkedIn job alerts — passive input, no automation
 
-**Sources evaluated and eliminated:** Contra (design/product skew), Discord (auth required), Craigslist (RSS 403 from all endpoints), RemoteOK (90% full-time engineering roles).
+**Sources evaluated and eliminated:** Contra (design/product skew), Discord (auth required), Craigslist (RSS 403 from all endpoints), RemoteOK (90% full-time engineering roles), Jobicy (zero freelance/contract dev jobs in API).
 
 **Structural note (updated 2026-03-12):** Original gig types (data cleanup, SOPs, spreadsheets) hit a ceiling — posted by non-technical people on gated platforms. Pipeline retuned to target technical gig types (web scraping, Python scripts, API integrations) which ARE posted in high volume on Reddit/HN. Hard constraint: manual platform browsing is a failure condition — all discovery must be automated.
 
@@ -167,13 +169,15 @@ This project exists within a broader personal strategy:
 | Scripting | Python 3.13 | Free | AE-relevant, good API support |
 | Reddit data | `requests` + public JSON API | Free | Reddit locked down script app registration; public endpoint requires no auth |
 | HN data | Algolia search API + HN Firebase API | Free | No auth required; monthly cadence; searches within HN thread by keyword |
+| Freelancer.com data | `requests` + public REST API | Free | No auth required; daily cadence; filters by job category and project type |
+| Google Alerts data | `feedparser` + RSS feeds | Free | Wide-net discovery; Google indexes forums, job boards, niche sites |
 | AI Engine | Claude API (Sonnet for scoring + proposals) | ~$5/mo | Already in ecosystem |
 | Scheduling | Windows Task Scheduler (local) | Free | Reddit blocks GitHub Actions/datacenter IPs; local runner on residential IP works fine |
 | CRM/Tracker | Airtable | Free tier | Visual, no-code, fast to set up; auto-logged via airtable_logger.py |
 | Notifications | Discord webhook | Free | Zero-friction setup; Gmail app passwords require 2FA |
 | Version Control | GitHub (private repo) | Free | Portfolio-ready, good practice |
 
-**Explicitly not using:** Upwork (connect costs, bot competition), Fiverr (20% fee), praw (Reddit locked down API registration), GitHub Actions for scheduling (Reddit 403 block), Craigslist (RSS 403 from all IPs), RemoteOK (wrong market — full-time eng roles).
+**Explicitly not using:** Upwork (connect costs, bot competition), Fiverr (20% fee), praw (Reddit locked down API registration), GitHub Actions for scheduling (Reddit 403 block), Craigslist (RSS 403 from all IPs), RemoteOK (wrong market — full-time eng roles), Jobicy (zero freelance/contract dev jobs).
 
 ---
 
@@ -316,11 +320,11 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 **Goal:** Complement inbound monitoring with proactive outreach. Generate the first actual client engagement and first dollar of revenue.
 
-**Context:** Phase 3 confirmed that inbound monitoring alone hits a structural ceiling. Dylan's best gig types (data cleanup, SOPs, spreadsheet work) are posted by non-technical people who don't use developer platforms. Outbound flips the model: instead of waiting for gigs to appear, Dylan proactively shows up where clients look.
+**Context:** Phase 3 confirmed that inbound monitoring alone hits a structural ceiling. Session 8 pivot: target gig types shifted from non-technical (data cleanup, SOPs, spreadsheets) to technical (web scraping, Python scripts, API integrations). Non-technical gigs are posted on gated platforms that can't be automated; technical gigs are posted on Reddit/HN in high volume and can be fully delivered by Claude with Dylan QAing by running the code.
 
 **Deliverables:**
-- [ ] GitHub Pages portfolio page — simple 1-pager: who Dylan is, what he does, sample work types, contact/Reddit link
-- [ ] [For Hire] post template for relevant subreddits (r/forhire, r/slavelabour, r/freelance_forhire)
+- [x] GitHub Pages portfolio page — "Data & Automation Specialist" 1-pager live on GitHub Pages *(Session 6)*
+- [x] [For Hire] post template for relevant subreddits — `docs/for_hire_template.md` *(Session 7)*
 - [ ] First proposal submitted and logged in Airtable
 - [ ] First monthly pipeline review: source performance, scoring accuracy, time spent
 
@@ -386,6 +390,14 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 | 2026-03-12 | Retune pipeline from non-technical to technical gig types | Non-technical gigs (spreadsheets, SOPs) are posted on gated platforms (Facebook, LinkedIn) that can't be automated. Technical gigs (web scraping, Python scripts, API integration) ARE posted on Reddit/HN in high volume. Claude can deliver these; Dylan can QA by running code and checking output. Same pipeline, different keywords. |
 | 2026-03-12 | Hard constraint: manual platform browsing is a failure condition | If the pipeline requires Dylan to manually browse Reddit/Facebook/LinkedIn to find leads, the project has failed. All discovery must be automated. Retuning keywords is the fix — not adding manual steps. |
 | 2026-03-12 | Add QA feasibility as scoring criterion | New `qa_feasibility_score` in scoring prompt ensures Dylan only bids on gigs where he can verify the output by running code locally. Avoids landing gigs he can't QA. |
+| 2026-03-20 | Widen keywords after 7 days of no actionable leads | 5 posts scored across 7 runs, all SKIP. Diagnosed as insufficient keyword coverage (pipeline working correctly). Added: selenium, pandas, google sheets, excel, sql, airtable, parse, parsing. |
+| 2026-03-20 | Add r/learnpython as source | Mix of help requests and paid work postings; common source of "I need someone to build X" requests that fit Dylan's technical gig profile. |
+| 2026-03-20 | Exempt r/freelance_forhire from [hiring] tag filter | That sub has more freeform post formats than r/forhire — the tag filter was blocking real gigs. Added to tag_exempt_subreddits alongside WorkOnline and HireaWriter. |
+| 2026-03-22 | Add Freelancer.com as a source (public API, no auth) | Reddit/HN confirmed low-signal after 10+ days. Freelancer.com public API returns 25 active fixed-price projects per run with budgets, skill tags, and full descriptions — first run produced 5 MAYBE results. No auth needed. |
+| 2026-03-22 | Reject Jobicy as a source | Tested API — zero freelance/contract dev jobs returned. Only full-time positions. Dead end. |
+| 2026-03-22 | Add Google Alerts RSS as a source | Wide-net discovery via Google indexing. 4 alert feeds created. Zero auth, `feedparser` library, trivially parseable. Alerts take 24-48h to start producing results. |
+| 2026-03-22 | Add SKIP visibility to Discord digest | SKIP posts were being suppressed — no way to see WHY posts were rejected. Added compact one-liners showing title, 3 scores, and reasoning for every SKIP. Critical for diagnosing scoring thresholds. |
+| 2026-03-22 | Fix load_dotenv to use override=True from project root | Empty system env var for ANTHROPIC_API_KEY was shadowing the .env value. Fixed in main.py entry point. |
 
 ---
 
@@ -430,13 +442,17 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 - [ ] **Automated client/job acquisition research agent** — Evaluate whether a dedicated research agent could automate discovery on non-developer platforms (Facebook groups, LinkedIn, etc.) where the actual buyers for Dylan's gig types post. Reddit/HN passive monitoring hits a structural ceiling. The hypothesis: an agent that proactively searches and surfaces opportunities on these channels could replace or supplement manual monitoring. Requires evaluating platform APIs, scrapeability, and whether automation is even feasible given bot detection. *Context: surfaced during Phase 4 strategic review; deprioritized in favor of manual outbound first.*
 
+- [ ] **Google Alerts expansion** — Google Alerts proved easy to integrate (RSS feed, zero auth, parseable with `feedparser`). Explore additional alert queries beyond freelance gig discovery: industry trend monitoring, competitor tracking, keyword-based lead generation for specific niches. The infrastructure is source-agnostic — any well-crafted alert query feeds into the same scoring pipeline. *Context: surfaced during Session 10 source diversification. Low effort to experiment — just add new alert queries in the browser and paste RSS URLs into config.*
+
+- [ ] **AI-Assisted Development Case Study** — Write a standalone markdown document (`docs/case_study.md`) documenting the GigFlow build process as a portfolio piece. Audience: hiring managers and technical interviewers evaluating ability to scope, build, and ship with AI-assisted tooling. Tone: honest and specific — no inflation. Should cover: (1) **Problem statement** — what GigFlow solves and why it was built, including the two-bucket framework and the AE career pivot context; (2) **AI-assisted workflow** — how Claude Code was used throughout: scoping and architecture decisions, implementation, debugging, iteration, and the pivot (technical gig types replacing non-technical ones); (3) **Technical decisions** — stack choices (Python, requests over praw, Windows Task Scheduler over GitHub Actions, Discord over email, etc.), tradeoffs made, and honest "what I'd do differently"; (4) **Output** — what the tool does end-to-end, with code snippets or a short demo walkthrough. *Not user-facing docs — career portfolio only. No revenue gate — the build story, architectural decisions, and operational data are the outcome. Can be written any time after the keyword-widening iteration in Phase 4.*
+
 ---
 
 ## 13. Open Questions (Resolve As You Go)
 
 - [x] Reddit API: Which auth method? → Resolved: no auth, public JSON endpoint
 - [x] Notifications: Slack or email? → Resolved: Discord webhook
-- [x] Additional sources beyond Reddit? → Resolved: HN added (monthly). Craigslist (403), RemoteOK (wrong market), Contra (design/product skew), Discord (auth required) all evaluated and eliminated.
+- [x] Additional sources beyond Reddit? → Resolved: HN (monthly), Freelancer.com (daily API), Google Alerts (RSS). Evaluated and eliminated: Craigslist (403), RemoteOK (wrong market), Contra (design/product skew), Discord (auth required), Jobicy (zero freelance dev jobs).
 - [ ] Scoring prompt: token cost at scale? Monitor after first 30 days of real runs.
 - [ ] Pricing strategy: Undercut market to win first gigs, or price fair from day one?
 - [ ] Legal: Do we need a simple freelance contract template? Payment terms?

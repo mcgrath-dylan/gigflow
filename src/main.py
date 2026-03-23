@@ -1,5 +1,13 @@
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Load .env from project root before any module imports that need API keys
+load_dotenv(Path(__file__).parent.parent / ".env", override=True)
+
 from reddit_scraper import load_config, fetch_posts, filter_posts, pre_screen, load_seen_ids, save_seen_ids
 from hn_scraper import get_hn_gigs
+from freelancer_scraper import get_freelancer_gigs
+from google_alerts_scraper import get_google_alerts_gigs
 from scorer import score_post
 from proposer import draft_proposal
 from notifier import send_digest
@@ -34,9 +42,17 @@ def run():
         )
         hn_posts = [p for p in hn_posts if p["id"] not in seen_ids]
 
-    all_posts = reddit_posts + hn_posts
-    matched = matched + hn_posts
-    print(f"\n{len(reddit_posts)} Reddit + {len(hn_posts)} HN fetched, {len(matched)} new matches after filtering.")
+    # Extract: Freelancer.com (daily — API returns active projects, dedup via seen_ids)
+    fl_posts = get_freelancer_gigs(config)
+    fl_posts = [p for p in fl_posts if p["id"] not in seen_ids]
+
+    # Extract: Google Alerts (daily — RSS feeds, dedup via seen_ids)
+    ga_posts = get_google_alerts_gigs(config)
+    ga_posts = [p for p in ga_posts if p["id"] not in seen_ids]
+
+    all_posts = reddit_posts + hn_posts + fl_posts + ga_posts
+    matched = matched + hn_posts + fl_posts + ga_posts
+    print(f"\n{len(reddit_posts)} Reddit + {len(hn_posts)} HN + {len(fl_posts)} Freelancer + {len(ga_posts)} Google Alerts fetched, {len(matched)} new matches after filtering.")
 
     # Pre-screen: cheap local filter before hitting Claude API
     to_score = []
@@ -55,7 +71,7 @@ def run():
         print(f"Scoring: {post['title'][:60]}...")
         result = score_post(post)
         scored.append(result)
-        print(f"  → {result['recommendation']} (clarity {result['clarity_score']}, ai {result['ai_deliverability_score']})")
+        print(f"  -> {result['recommendation']} (clarity {result['clarity_score']}, ai {result['ai_deliverability_score']})")
 
     # Sort: BID first, then MAYBE, then SKIP
     order = {"BID": 0, "MAYBE": 1, "SKIP": 2}

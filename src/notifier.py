@@ -14,6 +14,10 @@ def format_post(post: dict) -> str:
     source = post.get("source", "reddit")
     if source == "hackernews":
         source_line = "📌 Hacker News — Who is hiring?"
+    elif source == "freelancer":
+        source_line = "📌 Freelancer.com"
+    elif source == "google_alerts":
+        source_line = "📌 Google Alerts"
     else:
         source_line = f"📌 r/{post['subreddit']} | 👤 u/{post['author']}"
 
@@ -41,17 +45,28 @@ def send_digest(scored_posts: list[dict]) -> None:
 
     bids = [p for p in scored_posts if p["recommendation"] == "BID"]
     maybes = [p for p in scored_posts if p["recommendation"] == "MAYBE"]
+    skips = [p for p in scored_posts if p["recommendation"] == "SKIP"]
     actionable = bids + maybes
 
-    if not actionable:
-        payload = {"content": f"✅ GigFlow ran — {len(scored_posts)} scored, none actionable today."}
-        requests.post(WEBHOOK_URL, json=payload)
-        return
-
-    header = f"## 🔍 GigFlow Digest — {len(bids)} BID, {len(maybes)} MAYBE ({len(scored_posts)} total scored)\n"
-
-    # Discord has a 2000 char limit per message, so send one message per post
+    header = f"## 🔍 GigFlow Digest — {len(bids)} BID, {len(maybes)} MAYBE, {len(skips)} SKIP ({len(scored_posts)} total scored)\n"
     requests.post(WEBHOOK_URL, json={"content": header})
 
+    # Full detail for BID and MAYBE posts
     for post in actionable:
         requests.post(WEBHOOK_URL, json={"content": format_post(post)})
+
+    # Compact one-liner for each SKIP so we can see why posts were rejected
+    if skips:
+        skip_lines = []
+        for p in skips:
+            c = p.get("clarity_score", "?")
+            a = p.get("ai_deliverability_score", "?")
+            q = p.get("qa_feasibility_score", "?")
+            reason = p.get("reasoning", "no reason given")
+            title = p.get("title", "Untitled")[:60]
+            skip_lines.append(f"🔴 **{title}** — C:{c} A:{a} Q:{q} — {reason}")
+        skip_block = "**SKIPs:**\n" + "\n".join(skip_lines)
+        # Discord 2000-char limit — split if needed
+        while skip_block:
+            chunk, skip_block = skip_block[:1900], skip_block[1900:]
+            requests.post(WEBHOOK_URL, json={"content": chunk})
