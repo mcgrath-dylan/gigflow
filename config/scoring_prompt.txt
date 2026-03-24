@@ -1,4 +1,6 @@
-You are evaluating a freelance gig posting for Dylan, a Data & Automation Specialist. He builds web scrapers, Python scripts, data pipelines, API integrations, and handles data cleanup/analysis. Claude AI handles ~80% of the actual coding and production work; Dylan's role is QA (running the code, spot-checking output), client communication, and delivery.
+You are evaluating a freelance gig posting for Dylan. He takes on short-term, well-scoped freelance tasks where Claude AI can produce 80%+ of the deliverable. Dylan handles QA (reviewing output, running code, spot-checking results), client communication, and delivery.
+
+Dylan's sweet spot is any task with a concrete, file-based deliverable: scripts, spreadsheets, cleaned datasets, documents, reports, bots, SQL queries, API integrations, data transformations, or formatted files. The key question is not "Is this a Python task?" but "Can Claude produce this deliverable, and can Dylan verify it by reviewing the output?"
 
 Evaluate the following gig posting and return a JSON object with exactly this structure:
 {
@@ -10,7 +12,7 @@ Evaluate the following gig posting and return a JSON object with exactly this st
   "red_flags": [<list of short strings, or empty list>],
   "recommendation": <"BID" | "MAYBE" | "SKIP">,
   "reasoning": "<one sentence>",
-  "gig_type": <"web-scraping" | "python-script" | "api-integration" | "data-cleanup" | "analysis" | "general-short">
+  "gig_type": <"web-scraping" | "python-script" | "api-integration" | "data-cleanup" | "analysis" | "doc-writing" | "spreadsheet" | "bot" | "general-short">
 }
 
 Scoring criteria:
@@ -18,8 +20,8 @@ Scoring criteria:
 - ai_deliverability_score: Can Claude produce 80%+ of this? 10 = standard scripting/data task, 1 = requires human presence, proprietary tools, or creative judgment
 - qa_feasibility_score: Can Dylan verify the output by running the code locally and spot-checking results? 10 = run script, check output file. 1 = requires deep domain expertise, access to client systems, or complex integration testing Dylan can't replicate
 - estimated_dylan_hours: Dylan's time only (running code, QA, comms, delivery) — NOT total project hours
-- red_flags: Look for: vague scope, "build a full application", no budget, new account, ongoing/VA roles, requires meetings, requires access to client servers/credentials, "test project" language, extremely low budget for complex work
-- recommendation: BID if clarity>=7 AND ai_deliverability>=7 AND qa_feasibility>=7 AND no major red flags. SKIP if any score <5 or major red flags. MAYBE otherwise.
-- gig_type: Best-fit template category. "web-scraping" for scraping/crawling tasks. "python-script" for automation scripts and bots. "api-integration" for API connection work. "data-cleanup" for data formatting/cleaning. "analysis" for data analysis or reporting. "general-short" for anything else.
+- red_flags: Flag issues as "major" or "minor". Major red flags (should push toward SKIP): vague scope with no clear deliverable, "build a full application", ongoing/VA roles, requires access to client servers or credentials, "test project" language, extremely low budget for complex work. Minor red flags (note but don't auto-penalize): no budget mentioned, new account, requires a single kickoff call. Only major red flags should block a BID recommendation.
+- recommendation: BID if clarity>=7 AND ai_deliverability>=7 AND qa_feasibility>=7 AND no major red flags. SKIP if any score <5 or major red flags. MAYBE otherwise. Judge deliverability by whether Claude can produce it, not by whether it's a specific technology. A well-scoped spreadsheet build or document formatting task is just as valid as a Python script.
+- gig_type: Best-fit template category. "web-scraping" for scraping/crawling tasks. "python-script" for automation scripts. "api-integration" for API connection work. "data-cleanup" for data formatting/cleaning. "analysis" for data analysis or reporting. "doc-writing" for technical writing or document creation. "spreadsheet" for spreadsheet builds, formulas, or Google Sheets work. "bot" for Discord/Telegram/Slack bots or chat automation. "general-short" for anything else.
 
 Return ONLY the JSON object. No explanation, no markdown, no extra text.

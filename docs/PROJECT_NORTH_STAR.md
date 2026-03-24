@@ -10,12 +10,12 @@
 
 **Current Phase:** 4 — Outbound + First Revenue
 **Current Micro-Task:** 4.3 — First real proposal submitted
-**Session Count:** 11
+**Session Count:** 12
 **Progression Level:** Supervised
 **Last Session Date:** 2026-03-23
-**Last Session Summary:** Token efficiency optimization — stopped drafting proposals for MAYBE posts (BID-only now), saving ~5 Haiku API calls per run. MAYBE posts now display as compact one-liners in Discord (like SKIPs) instead of full blocks with proposals. Built Gmail draft feature (email extraction, Gmail API drafter, OAuth setup script) for auto-creating Gmail drafts when BID posts contain contact emails — but put on ice pending email account access (no 2FA, forgot password). All code is in place with graceful degradation (GMAIL_AVAILABLE flag).
-**Blockers / Open Issues:** Gmail draft feature on hold — Dylan needs to reset project email password and set up 2FA before running OAuth setup. Google Alerts feeds should be producing results by now (created 2026-03-22).
-**Next Action:** 4.3 — Review tonight's Discord digest (5pm run). Token cost should be noticeably lower with MAYBE proposals eliminated. When a BID surfaces, submit first real proposal.
+**Last Session Summary:** Implemented pipeline realignment plan (all 6 changes). Rewrote scoring prompt profile to be deliverable-first instead of tech-first. Tiered red flags (major vs minor). Added 2 new gig types (spreadsheet, bot) with proposal templates. Expanded keywords (+9) and skip phrases (+5). Fixed `load_dotenv(override=True)` across all modules. Full pipeline test passed: 17 scored, 3 MAYBE (including 2 spreadsheet gigs the old pipeline would have missed), 0 false-positive BIDs.
+**Blockers / Open Issues:** Gmail draft feature still on hold (email access).
+**Next Action:** Monitor pipeline for 2-3 days. Watch SKIP log for noise from broad keywords (`database`, `spreadsheet`). If noisy, tighten to compound forms. Goal: land first BID and submit a real proposal (micro-task 4.3).
 
 ### How to resume
 
@@ -342,28 +342,36 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 ## 8. Gig Type Fit Matrix
 
-### Good Fits (high AI-leverage, clear scope, Dylan can QA by running code)
-- Web scraping — extract data from specific sites, deliver as CSV/JSON
+The core filter: **Can Claude produce 80%+ of this deliverable, and can Dylan verify the output?**
+
+### Strong Fits (high Claude-leverage, concrete deliverable, easy to QA)
+- Web scraping — extract data from sites, deliver as CSV/JSON
 - Python scripts — automate file processing, data transformation, scheduled tasks
 - API integrations — connect services, pull/push data between platforms
 - Data cleanup — restructure, de-dupe, standardize messy datasets
+- Spreadsheet builds — templates, formulas, formatted workbooks, Google Sheets
 - Data analysis with written summary
 - ETL / data pipeline scripts
+- SQL queries and database work
+- Bot development (Discord, Telegram, Slack)
 
-### Acceptable Fits (moderate AI-leverage, some judgment needed)
+### Acceptable Fits (moderate Claude-leverage, some judgment needed)
 - Technical writing / documentation
 - Report generation from raw data
-- Bot development (Discord, Telegram, etc.)
-- CSV/JSON parsing and transformation
+- Data entry from structured sources
+- CSV/JSON/file format conversion
+- Google Apps Script automation
 
-### Bad Fits (avoid — time sinks or unverifiable)
+### Bad Fits (avoid — time sinks, unverifiable, or outside scope)
 - Full application development ("build me an app")
-- Anything requiring live calls or meetings
+- Anything requiring live calls or ongoing meetings
 - Ongoing maintenance contracts (scope creep)
 - Anything requiring access to client servers/credentials
 - Ambiguously scoped projects with no clear deliverable
-- Creative/subjective work (marketing copy, branding)
+- Creative/subjective work (marketing copy, branding, design)
 - Work requiring proprietary tools Dylan doesn't have
+- Mobile app development
+- WordPress/Shopify customization
 
 ---
 
@@ -402,6 +410,9 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 | 2026-03-22 | Fix load_dotenv to use override=True from project root | Empty system env var for ANTHROPIC_API_KEY was shadowing the .env value. Fixed in main.py entry point. |
 | 2026-03-23 | Stop drafting proposals for MAYBE posts (BID-only) | MAYBE proposals were never submitted — wasted Haiku API calls and Discord space. MAYBEs now show as compact one-liners. Saves ~5 API calls per run. |
 | 2026-03-23 | Build Gmail draft feature for BID proposals (on ice) | Code complete: email extraction, Gmail API drafter, OAuth setup script. Graceful degradation via GMAIL_AVAILABLE flag. On hold — Dylan needs to reset project email password and set up 2FA for Google Cloud OAuth. |
+| 2026-03-23 | Fix deterministic filtering for self-promo posts | Added `is_for_hire_post()` to reject `[For Hire]` titles in `filter_posts()`. Added 7 self-promo skip phrases to `pre_screen()` (covers all sources). Saves API tokens by catching obvious non-gigs before LLM scoring. |
+| 2026-03-23 | Plan: Realign pipeline from "Python/scraping specialist" to "Claude-deliverable work" | 0-BID run exposed that keywords, scoring profile, and gig type matrix were all anchored to Python/scraping, causing the LLM to penalize adjacent work (spreadsheets, bots, docs) that Claude can absolutely deliver. Plan ready: expand keywords (+9), rewrite scoring prompt profile, tier red flags (major vs minor), add 2 new gig types (spreadsheet, bot). Implementation deferred to next session. |
+| 2026-03-23 | Implement pipeline realignment plan | Executed all 6 changes: rewrote scoring prompt profile (deliverable-first, not tech-first), tiered red flags (major vs minor), updated recommendation logic, added 2 gig types (spreadsheet, bot) with templates, expanded keywords (+9), added skip phrases (+5 for app dev noise). Also fixed `load_dotenv(override=True)` across all modules. Full pipeline test: 17 scored, 3 MAYBE (including 2 spreadsheet gigs the old pipeline would have missed), 0 false-positive BIDs. |
 
 ---
 

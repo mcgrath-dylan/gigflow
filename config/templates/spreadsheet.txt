@@ -1,0 +1,9 @@
+Hi [POSTER_NAME_OR_OP],
+
+I can build this spreadsheet for you. I'll [SPECIFIC_TASK — e.g. "structure the estimating template with formulas for materials, labor, and markup"] and deliver as [FORMAT — e.g. .xlsx, Google Sheets].
+
+[BRIEF_NOTE — e.g. "I'll include data validation and conditional formatting so it's easy to use." or "Happy to do a revision pass once you test it with real numbers."]
+
+[BUDGET_LINE — either "Happy to work within your $X budget." or "What's your budget for this?"]
+
+— Dylan

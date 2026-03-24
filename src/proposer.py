@@ -2,10 +2,10 @@ import anthropic
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 TEMPLATES_DIR = Path(__file__).parent.parent / "config" / "templates"
-VALID_TYPES = {"web-scraping", "python-script", "api-integration", "data-cleanup", "analysis", "doc-writing", "general-short"}
+VALID_TYPES = {"web-scraping", "python-script", "api-integration", "data-cleanup", "analysis", "doc-writing", "spreadsheet", "bot", "general-short"}
 
 client = anthropic.Anthropic()
 

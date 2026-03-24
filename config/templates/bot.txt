@@ -1,0 +1,9 @@
+Hi [POSTER_NAME_OR_OP],
+
+I can build this bot for you. I'll set up [SPECIFIC_FUNCTIONALITY — e.g. "a Discord bot that monitors a channel and logs messages to a spreadsheet"] with [KEY_FEATURES].
+
+[BRIEF_TECHNICAL_NOTE — e.g. "I'll include setup instructions so you can host it yourself." or "I'll handle the API integration and error handling."]
+
+[BUDGET_LINE — either "Happy to work within your $X budget." or "What's your budget for this?"]
+
+— Dylan

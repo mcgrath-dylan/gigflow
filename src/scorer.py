@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 PROMPT_FILE = Path(__file__).parent.parent / "config" / "scoring_prompt.txt"
 client = anthropic.Anthropic()

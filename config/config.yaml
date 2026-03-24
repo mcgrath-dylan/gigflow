@@ -39,6 +39,18 @@ keywords:
   - data report
   - csv
   - json parsing
+  # Bot development
+  - discord bot
+  - telegram bot
+  - slack bot
+  # Spreadsheet / document work
+  - spreadsheet
+  - google apps script
+  # Data entry / structured tasks
+  - data entry
+  # Database
+  - sql query
+  - database
 
 filters:
   max_age_hours: 48
@@ -102,3 +114,17 @@ pre_screen:
     - "equity only"
     - "need access to my server"
     - "ongoing maintenance"
+    # Self-promotional / "for hire" posts (not a client gig)
+    - "available for hire"
+    - "looking for work"
+    - "open to freelance"
+    - "seeking freelance"
+    - "available for freelance"
+    - "my services"
+    - "hire me"
+    # App development / wrong scope
+    - "build me an app"
+    - "mobile app"
+    - "full stack"
+    - "wordpress"
+    - "shopify"

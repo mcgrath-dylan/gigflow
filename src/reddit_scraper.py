@@ -49,6 +49,11 @@ def is_hiring_post(post: dict, tag: str) -> bool:
     return post["title"].lower().startswith(tag)
 
 
+def is_for_hire_post(post: dict) -> bool:
+    """Reject self-promotional posts (freelancers advertising their services)."""
+    return post["title"].lower().startswith("[for hire]")
+
+
 def is_recent(post: dict, hours: int) -> bool:
     cutoff = datetime.now(tz=timezone.utc) - timedelta(hours=hours)
     return datetime.fromisoformat(post["created_utc"]) >= cutoff
@@ -84,6 +89,7 @@ def filter_posts(posts: list[dict], config: dict, seen_ids: set) -> list[dict]:
     return [
         p for p in posts
         if p["id"] not in seen_ids
+        and not is_for_hire_post(p)
         and (p["subreddit"].lower() in exempt or is_hiring_post(p, tag))
         and is_recent(p, hours)
         and matches_keywords(p, keywords)

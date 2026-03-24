@@ -3,7 +3,7 @@ import requests
 from datetime import date
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 BASE_ID = os.getenv("AIRTABLE_BASE_ID")
 PAT = os.getenv("AIRTABLE_PAT")

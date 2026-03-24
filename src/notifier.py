@@ -2,7 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 

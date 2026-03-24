@@ -8,7 +8,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 PAT = os.getenv("AIRTABLE_PAT")
 HEADERS = {

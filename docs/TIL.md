@@ -4,6 +4,16 @@ Running log of what was built and understood each session.
 
 ---
 
+## 2026-03-23 — Session 12
+
+**What I built:** Fixed the deterministic filters so "[For Hire]" self-promo posts stop burning API tokens. Then did a full audit of the pipeline's filtering and scoring against the actual project philosophy — turns out the whole system was anchored to "find Python/scraping gigs" when the real question should be "can Claude deliver this?" Updated the North Star fit matrix and wrote a detailed implementation plan for next session to rewrite the scoring prompt, expand keywords, and add new gig types.
+
+**What I learned:** This was basically a root cause analysis. The symptom was 0 BIDs — but the fix wasn't loosening thresholds, it was realizing the pipeline's definition of a "good gig" was too narrow. A spreadsheet build scored 8/7/8 and still got MAYBE'd because the LLM read "Python/scraping specialist" in the prompt and penalized it for not being Python. Same concept as data governance: if your business rules don't match the business intent, the reports will always look wrong no matter how clean the data is.
+
+**What confused me:** Nothing blocked. The "[For Hire]" filter gap was obvious once I looked — just hadn't thought to check for the inverse of the `[hiring]` tag.
+
+---
+
 ## 2026-03-23 — Session 11
 
 **What I built:** Stopped drafting proposals for MAYBE posts (BID-only now) to save tokens. Built a Gmail draft feature for auto-creating email drafts when BID posts have contact emails — but put it on ice since I can't access the project email right now. Also ran a full repo audit and cleaned up stale docs, dead dependencies, and config mismatches.
