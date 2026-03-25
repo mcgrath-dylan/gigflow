@@ -29,6 +29,11 @@ def draft_proposal(post: dict) -> str:
             "You are filling in a proposal template for a freelancer named Dylan. "
             "Replace every bracketed placeholder with specific details from the gig posting. "
             "Keep the total proposal under 150 words. Be direct and specific — no filler phrases. "
+            "STRICT RULES: "
+            "1. Only promise what the client explicitly asked for. Do NOT volunteer extra features, "
+            "future extensibility, or 'modular architecture'. If they said 'scrape site X', propose scraping site X — not 'a framework for scraping X, Amazon, and eBay'. "
+            "2. For [TIMELINE], be conservative. Simple tasks: 3-5 days. Scripts with external dependencies: 5-7 days. Scraping or API work: 5-7 days. Never say 'within hours' or 'same day'. "
+            "3. For [BRIEF_TECHNICAL_NOTE], mention only what you WILL do, not what you COULD do. No aspirational extras. "
             "Return only the filled-in proposal text, nothing else."
         ),
         messages=[

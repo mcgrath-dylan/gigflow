@@ -17,11 +17,27 @@ Evaluate the following gig posting and return a JSON object with exactly this st
 
 Scoring criteria:
 - clarity_score: Is the deliverable well-defined? 10 = crystal clear scope ("scrape X from Y, deliver as CSV"), 1 = completely vague ("build me something")
-- ai_deliverability_score: Can Claude produce 80%+ of this? 10 = standard scripting/data task, 1 = requires human presence, proprietary tools, or creative judgment
+- ai_deliverability_score: Can Claude produce 80%+ of this? 10 = standard scripting/data task, 1 = requires human presence, proprietary tools, or creative judgment. Deduct points for: anti-bot/anti-scraping complexity (-2 to -4 for sites with known protections like Cloudflare, CAPTCHAs, or JS-rendered content), scope creep signals like "modular", "extensible", "scalable", "phase 2", "add more sites later" (-1 to -2), and gigs requiring iterative testing against live systems Dylan can't replicate locally (-1 to -2).
 - qa_feasibility_score: Can Dylan verify the output by running the code locally and spot-checking results? 10 = run script, check output file. 1 = requires deep domain expertise, access to client systems, or complex integration testing Dylan can't replicate
-- estimated_dylan_hours: Dylan's time only (running code, QA, comms, delivery) — NOT total project hours
-- red_flags: Flag issues as "major" or "minor". Major red flags (should push toward SKIP): vague scope with no clear deliverable, "build a full application", ongoing/VA roles, requires access to client servers or credentials, "test project" language, extremely low budget for complex work. Minor red flags (note but don't auto-penalize): no budget mentioned, new account, requires a single kickoff call. Only major red flags should block a BID recommendation.
+- estimated_dylan_hours: Dylan's REAL hands-on time — includes running code, QA, debugging/iteration, client comms, and delivery. This is NOT just "review and ship" time. Include time for:
+  * Debugging and iteration (code rarely works perfectly on first run)
+  * Live-environment testing where applicable (scraping against real sites, API auth flows, etc.)
+  * Client back-and-forth (clarifications, revision rounds)
+  Calibration guide:
+  * Simple file transform / CSV cleanup / doc formatting: 1-3h
+  * Standard script (clear input/output, no external dependencies): 2-4h
+  * API integration (auth, error handling, rate limits): 4-8h
+  * Web scraping (known, stable site, no anti-bot): 3-6h
+  * Web scraping (anti-bot measures, dynamic content, or unknown site protections): 8-15h
+  * Any gig requiring iterative live-site testing you can't replicate locally: add 50-100% buffer
+  When in doubt, round UP. Dylan loses money on underestimates, not overestimates.
+- red_flags: Flag issues as "major" or "minor". Major red flags (should push toward SKIP): vague scope with no clear deliverable, "build a full application", ongoing/VA roles, requires access to client servers or credentials, "test project" language, extremely low budget for complex work, scope creep signals ("modular architecture", "extensible for future sites", "phase 2" language where client clearly expects ongoing expansion beyond the stated deliverable). Minor red flags (note but don't auto-penalize): no budget mentioned, new account, requires a single kickoff call, aspirational language that might signal scope creep ("eventually", "down the road", "would be nice to also"). Only major red flags should block a BID recommendation.
 - recommendation: BID if clarity>=7 AND ai_deliverability>=7 AND qa_feasibility>=7 AND no major red flags. SKIP if any score <5 or major red flags. MAYBE otherwise. Judge deliverability by whether Claude can produce it, not by whether it's a specific technology. A well-scoped spreadsheet build or document formatting task is just as valid as a Python script.
 - gig_type: Best-fit template category. "web-scraping" for scraping/crawling tasks. "python-script" for automation scripts. "api-integration" for API connection work. "data-cleanup" for data formatting/cleaning. "analysis" for data analysis or reporting. "doc-writing" for technical writing or document creation. "spreadsheet" for spreadsheet builds, formulas, or Google Sheets work. "bot" for Discord/Telegram/Slack bots or chat automation. "general-short" for anything else.
+
+IMPORTANT — Scoring traps to avoid:
+- Do NOT assume web scraping is simple. If the target site is large/commercial (Amazon, LinkedIn, Zillow, etc.) or the posting doesn't specify the exact site, assume anti-bot measures exist and score accordingly.
+- Do NOT give high ai_deliverability to gigs with scope creep signals. If the client says "scrape site X" but also wants "modular architecture to add Amazon/eBay later", the REAL scope is much larger than stated.
+- Do NOT lowball estimated_dylan_hours to make a gig look attractive. A BID with realistic hours is better than a BID with fantasy hours.
 
 Return ONLY the JSON object. No explanation, no markdown, no extra text.

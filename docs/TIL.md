@@ -4,6 +4,16 @@ Running log of what was built and understood each session.
 
 ---
 
+## 2026-03-25 — Session 13
+
+**What I built:** Tightened the scoring prompt, proposal generation, and hours estimation after reviewing the first real BID candidates. Added a calibration guide for `estimated_dylan_hours` with concrete ranges per gig type, complexity penalties for anti-bot measures and scope creep signals, and strict rules in the proposal system prompt to prevent over-promising.
+
+**What I learned:** Prompt engineering as a configuration layer — the Python code didn't change at all, but the system's behavior changed significantly. The scoring prompt is the business logic; the Python is just plumbing. Same concept as dbt: the SQL models define what happens, the framework just orchestrates execution. Also: systematic underestimation is a real risk when AI scores tasks — it optimistically assumes everything works on first try unless you explicitly tell it to account for debugging and iteration.
+
+**What confused me:** Nothing blocked. The changes were straightforward text edits. The harder question is whether the tightened scoring will over-penalize clean gigs — need to watch the next few runs.
+
+---
+
 ## 2026-03-23 — Session 12
 
 **What I built:** Fixed the deterministic filters so "[For Hire]" self-promo posts stop burning API tokens. Then did a full audit of the pipeline's filtering and scoring against the actual project philosophy — turns out the whole system was anchored to "find Python/scraping gigs" when the real question should be "can Claude deliver this?" Updated the North Star fit matrix and wrote a detailed implementation plan for next session to rewrite the scoring prompt, expand keywords, and add new gig types.

@@ -2,7 +2,7 @@ Hi [POSTER_NAME_OR_OP],
 
 I can build this scraper for you. I'll extract [SPECIFIC_DATA_FIELDS] from [TARGET_SITE_OR_SOURCE] and deliver the output as [FORMAT — e.g. CSV, JSON, Excel] within [TIMELINE].
 
-[BRIEF_TECHNICAL_NOTE — e.g. "I'll handle pagination and rate limiting so the scraper runs cleanly." or "I'll include error handling for missing fields."]
+[BRIEF_TECHNICAL_NOTE — e.g. "I'll handle pagination and rate limiting so the scraper runs cleanly." Keep this to what the client asked for. Do NOT promise modularity, extensibility, or support for additional sites unless explicitly requested.]
 
 [BUDGET_LINE — either "Happy to work within your $X budget." or "What's your budget for this?"]
 

@@ -1,6 +1,6 @@
 # Project North Star: AI-Assisted Freelance Pipeline
 
-## Last Updated: March 23, 2026
+## Last Updated: March 25, 2026
 
 ---
 
@@ -10,12 +10,12 @@
 
 **Current Phase:** 4 — Outbound + First Revenue
 **Current Micro-Task:** 4.3 — First real proposal submitted
-**Session Count:** 12
+**Session Count:** 13
 **Progression Level:** Supervised
-**Last Session Date:** 2026-03-23
-**Last Session Summary:** Implemented pipeline realignment plan (all 6 changes). Rewrote scoring prompt profile to be deliverable-first instead of tech-first. Tiered red flags (major vs minor). Added 2 new gig types (spreadsheet, bot) with proposal templates. Expanded keywords (+9) and skip phrases (+5). Fixed `load_dotenv(override=True)` across all modules. Full pipeline test passed: 17 scored, 3 MAYBE (including 2 spreadsheet gigs the old pipeline would have missed), 0 false-positive BIDs.
+**Last Session Date:** 2026-03-25
+**Last Session Summary:** Tightened scoring prompt, proposal generation, and hours estimation after reviewing first real BID candidates (data cleanup + CLI scraper from Freelancer.com). Added calibration guide to `estimated_dylan_hours` with concrete ranges per gig type (scraping against unknown sites: 8-15h, not 4h). Added complexity penalties to `ai_deliverability_score` for anti-bot measures and scope creep signals. Scope creep language ("modular architecture", "phase 2") now flagged as major red flag. Proposal system prompt now has strict rules against over-promising and conservative timeline guidance. Web scraping template updated to prevent volunteering extensibility.
 **Blockers / Open Issues:** Gmail draft feature still on hold (email access).
-**Next Action:** Monitor pipeline for 2-3 days. Watch SKIP log for noise from broad keywords (`database`, `spreadsheet`). If noisy, tighten to compound forms. Goal: land first BID and submit a real proposal (micro-task 4.3).
+**Next Action:** Continue monitoring pipeline runs. First real BID candidates surfaced 2026-03-24 — pipeline is producing actionable output. Goal: submit first proposal on a well-scoped gig (micro-task 4.3). Review whether tightened scoring correctly downgrades scope-creep gigs without over-penalizing clean ones.
 
 ### How to resume
 
@@ -122,13 +122,15 @@ This project exists within a broader personal strategy:
 #### Layer 3: Proposal Drafting
 **Purpose:** Generate ready-to-send (or near-ready) proposals tailored to each gig.
 
-**Template library (7 templates, matched to gig_type from scoring):**
+**Template library (9 templates, matched to gig_type from scoring):**
 - `web-scraping`: Extract data from sites, deliver as CSV/JSON
 - `python-script`: Build automation scripts, data processing
 - `api-integration`: Connect services, pull/push data
 - `data-cleanup`: Restructure and standardize messy datasets
 - `analysis`: Analyze data and deliver report with insights
 - `doc-writing`: Turn notes/requirements into polished documents
+- `spreadsheet`: Build spreadsheets with formulas/validation, deliver as Excel/Sheets
+- `bot`: Build Discord/Telegram/Slack bots with specific functionality
 - `general-short`: Catch-all for small tasks
 
 **Each proposal must:**
@@ -294,7 +296,7 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 **Goal:** End-to-end flow from scored gig → draft proposal → tracking.
 
 **Deliverables:**
-- [x] Proposal template library (7 templates)
+- [x] Proposal template library (9 templates)
 - [x] Claude API integration for proposal customization
 - [x] Airtable base with gig tracking schema
 - [x] Discord notification includes draft proposal for BID gigs (MAYBE shows as compact one-liners)
@@ -311,7 +313,7 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 **Deliverables:**
 - [x] At least 1 additional source integrated — HN "Who is hiring?" added (monthly, Algolia); Reddit expanded to 5 subreddits
 - [x] Scoring keywords tightened — false positives ("report", "analysis") replaced with compound terms; "sop", "data quality", "process documentation" added
-- [x] Template library expanded to 7 templates covering technical gig types (web-scraping, python-script, api-integration, data-cleanup, analysis, doc-writing, general-short)
+- [x] Template library expanded to 9 templates covering all gig types (web-scraping, python-script, api-integration, data-cleanup, analysis, doc-writing, spreadsheet, bot, general-short)
 - [ ] First monthly review — deferred: pipeline needs a full month of live runs first
 
 **Success criteria:** Two sources operational. Keywords tightened — measurably fewer false positives. Structural ceiling identified: inbound alone won't meet Bucket 1 target. Phase 4 outbound warranted.
@@ -413,6 +415,7 @@ The core filter: **Can Claude produce 80%+ of this deliverable, and can Dylan ve
 | 2026-03-23 | Fix deterministic filtering for self-promo posts | Added `is_for_hire_post()` to reject `[For Hire]` titles in `filter_posts()`. Added 7 self-promo skip phrases to `pre_screen()` (covers all sources). Saves API tokens by catching obvious non-gigs before LLM scoring. |
 | 2026-03-23 | Plan: Realign pipeline from "Python/scraping specialist" to "Claude-deliverable work" | 0-BID run exposed that keywords, scoring profile, and gig type matrix were all anchored to Python/scraping, causing the LLM to penalize adjacent work (spreadsheets, bots, docs) that Claude can absolutely deliver. Plan ready: expand keywords (+9), rewrite scoring prompt profile, tier red flags (major vs minor), add 2 new gig types (spreadsheet, bot). Implementation deferred to next session. |
 | 2026-03-23 | Implement pipeline realignment plan | Executed all 6 changes: rewrote scoring prompt profile (deliverable-first, not tech-first), tiered red flags (major vs minor), updated recommendation logic, added 2 gig types (spreadsheet, bot) with templates, expanded keywords (+9), added skip phrases (+5 for app dev noise). Also fixed `load_dotenv(override=True)` across all modules. Full pipeline test: 17 scored, 3 MAYBE (including 2 spreadsheet gigs the old pipeline would have missed), 0 false-positive BIDs. |
+| 2026-03-25 | Tighten scoring, proposals, and hours estimation | First real BID candidates (data cleanup + CLI scraper) exposed systematic underestimation in `estimated_dylan_hours` (~4h for a scraper that's realistically 10-15h) and over-promising in proposals ("modular architecture for Amazon/eBay" when client asked for 2 sites). Added calibration guide with ranges per gig type, complexity penalties for anti-bot/scope-creep, scope creep as major red flag, and strict proposal rules against volunteering extras. |
 
 ---
 
