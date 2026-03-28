@@ -86,11 +86,8 @@ freelancer:
 
 google_alerts:
   enabled: true
-  feeds:
-    - "https://www.google.com/alerts/feeds/13659000287574271115/6993236278715754483"
-    - "https://www.google.com/alerts/feeds/13659000287574271115/2719749338087460902"
-    - "https://www.google.com/alerts/feeds/13659000287574271115/1141669749260850374"
-    - "https://www.google.com/alerts/feeds/13659000287574271115/3592513687534663865"
+  # Feed URLs loaded from GOOGLE_ALERTS_FEEDS env var (comma-separated)
+  # See .env.example for setup instructions
 
 gmail:
   enabled: true

@@ -1,3 +1,4 @@
+import os
 import re
 import hashlib
 import feedparser
@@ -61,7 +62,9 @@ def get_google_alerts_gigs(config):
     if not ga_config.get("enabled", False):
         return []
 
-    feeds = ga_config.get("feeds", [])
+    # Load feed URLs from env var (comma-separated) instead of config file
+    feeds_env = os.getenv("GOOGLE_ALERTS_FEEDS", "")
+    feeds = [url.strip() for url in feeds_env.split(",") if url.strip()]
     if not feeds:
         print("Google Alerts: enabled but no feed URLs configured. Skipping.")
         return []

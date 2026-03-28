@@ -8,14 +8,14 @@
 
 > **Claude: When Dylan says "pick up where we left off," read this block and resume accordingly.**
 
-**Current Phase:** 4 — Outbound + First Revenue
-**Current Micro-Task:** 4.3 — First real proposal submitted
-**Session Count:** 13
+**Current Phase:** 4 — Pivoted. Pipeline disabled, project repackaged as portfolio piece.
+**Current Micro-Task:** N/A — Revenue strategy (Bucket 1) retired for marketplace gigs. Exploring outbound as separate initiative.
+**Session Count:** 14
 **Progression Level:** Supervised
-**Last Session Date:** 2026-03-25
-**Last Session Summary:** Tightened scoring prompt, proposal generation, and hours estimation after reviewing first real BID candidates (data cleanup + CLI scraper from Freelancer.com). Added calibration guide to `estimated_dylan_hours` with concrete ranges per gig type (scraping against unknown sites: 8-15h, not 4h). Added complexity penalties to `ai_deliverability_score` for anti-bot measures and scope creep signals. Scope creep language ("modular architecture", "phase 2") now flagged as major red flag. Proposal system prompt now has strict rules against over-promising and conservative timeline guidance. Web scraping template updated to prevent volunteering extensibility.
-**Blockers / Open Issues:** Gmail draft feature still on hold (email access).
-**Next Action:** Continue monitoring pipeline runs. First real BID candidates surfaced 2026-03-24 — pipeline is producing actionable output. Goal: submit first proposal on a well-scoped gig (micro-task 4.3). Review whether tightened scoring correctly downgrades scope-creep gigs without over-penalizing clean ones.
+**Last Session Date:** 2026-03-27
+**Last Session Summary:** Strategic review of pipeline effectiveness. After 13 sessions, zero proposals submitted and zero revenue. Root cause analysis: the pipeline optimizes for discovery, but the actual bottleneck is marketplace credibility (zero reviews vs. established freelancers with hundreds). This is structural, not solvable with better filtering. Decision: disable scheduled pipeline to stop token spend, rewrite README as portfolio piece, preserve all code. GigFlow is now a Bucket 2 (portfolio/skills) project only.
+**Blockers / Open Issues:** None — pipeline intentionally disabled.
+**Next Action:** Dylan to disable Windows Task Scheduler entry for `run_pipeline.bat`. Outbound strategy (direct client outreach, niche positioning) to be explored as a separate initiative if Bucket 1 revenue is still a goal.
 
 ### How to resume
 
@@ -320,25 +320,23 @@ Tied to phases, not calendar weeks. Dylan moves fast — don't artificially slow
 
 ---
 
-### Phase 4: Outbound + First Revenue
+### Phase 4: Outbound + First Revenue → Pivoted to Portfolio
 
-**Goal:** Complement inbound monitoring with proactive outreach. Generate the first actual client engagement and first dollar of revenue.
+**Original goal:** Complement inbound monitoring with proactive outreach. Generate the first actual client engagement and first dollar of revenue.
 
-**Context:** Phase 3 confirmed that inbound monitoring alone hits a structural ceiling. Session 8 pivot: target gig types shifted from non-technical (data cleanup, SOPs, spreadsheets) to technical (web scraping, Python scripts, API integrations). Non-technical gigs are posted on gated platforms that can't be automated; technical gigs are posted on Reddit/HN in high volume and can be fully delivered by Claude with Dylan QAing by running the code.
+**Outcome:** After 13 sessions and zero submitted proposals, strategic review (Session 14, 2026-03-27) revealed a structural bottleneck: zero-reputation freelancer vs. established competitors with hundreds of reviews. The pipeline engineering was sound — discovery, scoring, filtering, and proposal generation all worked as designed — but better discovery can't solve a credibility gap. Decision: disable scheduled pipeline, stop token spend, repackage project as portfolio piece.
 
-**Deliverables:**
-- [x] GitHub Pages portfolio page — "Data & Automation Specialist" 1-pager live on GitHub Pages *(Session 6)*
-- [x] [For Hire] post template for relevant subreddits — `docs/for_hire_template.md` *(Session 7)*
-- [ ] First proposal submitted and logged in Airtable
-- [ ] First monthly pipeline review: source performance, scoring accuracy, time spent
+**Completed deliverables:**
+- [x] GitHub Pages portfolio page *(Session 6 — removed in Session 14, stale after pivot)*
+- [x] [For Hire] post template *(Session 7 — removed in Session 14, contained rates/contact info)*
+- [x] Pipeline repackaged as portfolio project *(Session 14)*
+- [x] README rewritten as portfolio narrative *(Session 14)*
 
-**Success criteria:** At least 1 proposal submitted. At least 1 reply or inquiry from any outbound channel.
+**Not completed (retired):**
+- First proposal submitted — retired: marketplace bidding strategy abandoned
+- Monthly pipeline review — retired: pipeline disabled
 
-**Possible later additions (evaluate after first month of outbound):**
-- Auto-response templates for common client follow-up questions
-- Client relationship tracking (repeat clients flagged in Airtable)
-- Rate optimization based on win/loss data
-- Cloud scheduling revisit if a Reddit-unblocked data source is added
+**Key lesson:** Validate the riskiest assumption (can I win a gig?) before automating the workflow around it. Set explicit kill criteria upfront.
 
 ---
 
@@ -416,6 +414,7 @@ The core filter: **Can Claude produce 80%+ of this deliverable, and can Dylan ve
 | 2026-03-23 | Plan: Realign pipeline from "Python/scraping specialist" to "Claude-deliverable work" | 0-BID run exposed that keywords, scoring profile, and gig type matrix were all anchored to Python/scraping, causing the LLM to penalize adjacent work (spreadsheets, bots, docs) that Claude can absolutely deliver. Plan ready: expand keywords (+9), rewrite scoring prompt profile, tier red flags (major vs minor), add 2 new gig types (spreadsheet, bot). Implementation deferred to next session. |
 | 2026-03-23 | Implement pipeline realignment plan | Executed all 6 changes: rewrote scoring prompt profile (deliverable-first, not tech-first), tiered red flags (major vs minor), updated recommendation logic, added 2 gig types (spreadsheet, bot) with templates, expanded keywords (+9), added skip phrases (+5 for app dev noise). Also fixed `load_dotenv(override=True)` across all modules. Full pipeline test: 17 scored, 3 MAYBE (including 2 spreadsheet gigs the old pipeline would have missed), 0 false-positive BIDs. |
 | 2026-03-25 | Tighten scoring, proposals, and hours estimation | First real BID candidates (data cleanup + CLI scraper) exposed systematic underestimation in `estimated_dylan_hours` (~4h for a scraper that's realistically 10-15h) and over-promising in proposals ("modular architecture for Amazon/eBay" when client asked for 2 sites). Added calibration guide with ranges per gig type, complexity penalties for anti-bot/scope-creep, scope creep as major red flag, and strict proposal rules against volunteering extras. |
+| 2026-03-27 | Retire marketplace revenue strategy; repackage as portfolio project | After 13 sessions and zero submitted proposals, conducted strategic review. Pipeline engineering is sound — discovery, scoring, filtering, proposals all work as designed. But the conversion bottleneck is structural: zero-reputation freelancer vs. established competitors with hundreds of reviews. Better filtering can't solve a credibility gap. Decision: disable scheduled pipeline (stop token spend), rewrite README as portfolio narrative, preserve all code. GigFlow continues as a Bucket 2 (portfolio/skills) asset. Bucket 1 revenue, if pursued, should use outbound/direct outreach — not marketplace bidding. Key lesson: validate the riskiest assumption (can I win a gig?) before automating the workflow around it. |
 
 ---
 
@@ -471,7 +470,7 @@ The core filter: **Can Claude produce 80%+ of this deliverable, and can Dylan ve
 - [x] Reddit API: Which auth method? → Resolved: no auth, public JSON endpoint
 - [x] Notifications: Slack or email? → Resolved: Discord webhook
 - [x] Additional sources beyond Reddit? → Resolved: HN (monthly), Freelancer.com (daily API), Google Alerts (RSS). Evaluated and eliminated: Craigslist (403), RemoteOK (wrong market), Contra (design/product skew), Discord (auth required), Jobicy (zero freelance dev jobs).
-- [ ] Scoring prompt: token cost at scale? Monitor after first 30 days of real runs.
-- [ ] Pricing strategy: Undercut market to win first gigs, or price fair from day one?
-- [ ] Legal: Do we need a simple freelance contract template? Payment terms?
-- [ ] Tax implications: At what income level does this need formal tracking? (Consult accountant, not Claude.)
+- [x] Scoring prompt: token cost at scale? → Resolved: ~$5/mo with Sonnet scoring + Haiku proposals. Pipeline now disabled.
+- [x] Pricing strategy → Resolved: Credibility, not pricing, was the bottleneck. Moot after pivot.
+- [x] Legal: freelance contract template? → Retired: no active client pipeline.
+- [x] Tax implications → Retired: no revenue generated. Revisit if outbound strategy produces income.

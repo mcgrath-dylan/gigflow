@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 # Freelancer.com job category IDs relevant to Dylan's profile
